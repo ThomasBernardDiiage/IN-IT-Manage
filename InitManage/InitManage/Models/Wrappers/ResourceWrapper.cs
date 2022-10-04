@@ -15,7 +15,8 @@ public class ResourceWrapper : IResourceEntity, ISearchable
         Name = resource.Name;
         Description = resource.Description;
         Image = resource.Image;
-        Type = resource.Type;
+        TypeId = resource.TypeId;
+        TypeName = resource.TypeName;
         Capacity = resource.Capacity;
     }
 
@@ -26,6 +27,8 @@ public class ResourceWrapper : IResourceEntity, ISearchable
     public string Type { get; set; }
     public int Capacity { get; set; }
     public string Address { get; set; }
+    public long TypeId { get; set; }
+    public string TypeName { get; set; }
 
 
     public bool IsCorrespondingToSearch(string searchedValue)

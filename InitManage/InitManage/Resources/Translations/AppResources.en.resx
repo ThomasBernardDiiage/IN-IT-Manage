@@ -118,106 +118,106 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Address" xml:space="preserve">
-    <value>Adresse</value>
+    <value>Address</value>
   </data>
   <data name="Administration" xml:space="preserve">
     <value>Administration</value>
   </data>
   <data name="AllReservations" xml:space="preserve">
-    <value>Toutes les réservations</value>
+    <value>All bookings</value>
   </data>
   <data name="At" xml:space="preserve">
-    <value>de</value>
+    <value>at</value>
   </data>
   <data name="BeNotifiedBeforeBooking" xml:space="preserve">
-    <value>Être prévenu avant une réservation :</value>
+    <value>Be notified before booking</value>
   </data>
   <data name="Book" xml:space="preserve">
-    <value>Réserver</value>
+    <value>Book</value>
   </data>
   <data name="BookThe" xml:space="preserve">
-    <value>Réserver le</value>
+    <value>Book the</value>
   </data>
   <data name="Create" xml:space="preserve">
-    <value>Créer</value>
+    <value>Create</value>
   </data>
   <data name="DarkMode" xml:space="preserve">
-    <value>Mode sombre (préversion) :</value>
+    <value>Dark mode (preview)</value>
   </data>
   <data name="Description" xml:space="preserve">
     <value>Description</value>
   </data>
   <data name="EnterTheAddress" xml:space="preserve">
-    <value>Entrez l'adresse</value>
+    <value>Enter the address</value>
   </data>
   <data name="EnterYourSearch" xml:space="preserve">
-    <value>Saisissez votre recherche</value>
+    <value>Enter your search</value>
   </data>
   <data name="For" xml:space="preserve">
-    <value>pour </value>
+    <value>for</value>
   </data>
   <data name="Hello" xml:space="preserve">
-    <value>Bonjour</value>
+    <value>Hello</value>
   </data>
   <data name="Home" xml:space="preserve">
-    <value>Menu</value>
+    <value>Home</value>
   </data>
   <data name="LoadingOptions" xml:space="preserve">
-    <value>Chargement des options</value>
+    <value>Loading options</value>
   </data>
   <data name="LoadingResources" xml:space="preserve">
-    <value>Chargement des resources</value>
+    <value>Loading resources</value>
   </data>
   <data name="LoadingTypes" xml:space="preserve">
-    <value>Chargement des types</value>
+    <value>Loading types</value>
   </data>
   <data name="LocalNotificationStatus" xml:space="preserve">
-    <value>Status des notifications locales</value>
+    <value>Local notification status</value>
   </data>
   <data name="Login" xml:space="preserve">
-    <value>Se connecter</value>
+    <value>Login</value>
   </data>
   <data name="LoginInProgress" xml:space="preserve">
-    <value>Connexion en cours</value>
+    <value>Login in progress</value>
   </data>
   <data name="Logout" xml:space="preserve">
-    <value>Déconnexion</value>
+    <value>Logout</value>
   </data>
   <data name="Mail" xml:space="preserve">
     <value>Mail</value>
   </data>
   <data name="MyReservations" xml:space="preserve">
-    <value>Mes réservations</value>
+    <value>My bookings</value>
   </data>
   <data name="Name" xml:space="preserve">
-    <value>Nom</value>
+    <value>Name</value>
   </data>
   <data name="NumberOfPlaces" xml:space="preserve">
-    <value>NombreDePlaces</value>
+    <value>Number of places</value>
   </data>
   <data name="Ok" xml:space="preserve">
     <value>Ok</value>
   </data>
   <data name="Parameters" xml:space="preserve">
-    <value>Paramètres</value>
+    <value>Parameters</value>
   </data>
   <data name="Password" xml:space="preserve">
-    <value>Mot de passe</value>
+    <value>Password</value>
   </data>
   <data name="Peoples" xml:space="preserve">
-    <value>personne(s)</value>
+    <value>peoples</value>
   </data>
   <data name="PictureLink" xml:space="preserve">
-    <value>Lien de l'image</value>
+    <value>Picture link</value>
   </data>
   <data name="Places" xml:space="preserve">
     <value>Places</value>
   </data>
   <data name="ReceiveNotificationBeforeBooking" xml:space="preserve">
-    <value>Recevoir une notification avant une réservation :</value>
+    <value>Receive notification before booking :</value>
   </data>
   <data name="SelectOptions" xml:space="preserve">
-    <value>Selectionez des options</value>
+    <value>Select options</value>
   </data>
   <data name="Type" xml:space="preserve">
     <value>Type</value>
@@ -226,15 +226,15 @@
     <value>Types</value>
   </data>
   <data name="NoResourceResult" xml:space="preserve">
-    <value>Aucune resource trouvée</value>
+    <value>No resource found</value>
   </data>
   <data name="NoOptionResult" xml:space="preserve">
-    <value>Aucune option trouvée</value>
+    <value>No option found</value>
   </data>
   <data name="NoBookingResult" xml:space="preserve">
-    <value>Aucune réservation trouvée</value>
+    <value>No booking found</value>
   </data>
   <data name="ServerError" xml:space="preserve">
-    <value>Erreur, impossible de contacter le serveur</value>
+    <value>Error, can't connect to server</value>
   </data>
 </root>

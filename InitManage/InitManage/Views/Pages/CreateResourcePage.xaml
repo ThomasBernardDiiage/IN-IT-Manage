@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:ResourceViewModels="clr-namespace:InitManage.ViewModels.Resource"
+             xmlns:Translations="clr-namespace:InitManage.Resources.Translations"
              xmlns:DataTemplates="clr-namespace:InitManage.Views.DataTemplates"
              xmlns:Wrappers="clr-namespace:InitManage.Models.Wrappers"
              x:Class="InitManage.Views.Pages.CreateResourcePage"
@@ -9,71 +10,82 @@
              x:DataType="ResourceViewModels:CreateResourceViewModel"
              IconImageSource="admin"
              BackgroundColor="{AppThemeBinding Light={StaticResource Light}, Dark={StaticResource Dark}}"
-             Title="Administration">
+             Title="{Static Translations:AppResources.Administration}">
 
     <Grid RowDefinitions="200, *">
         <Image
             Aspect="Fill"
-            Source="{Binding Picture, Mode=OneWay}"/>
+            Source="{Binding Picture}"/>
         <!-- Formulaire de création de ressource -->
-        <StackLayout Margin="10" Spacing="10" Grid.Row="1">
-            <!-- Nom de la ressource -->
-            <Entry 
+        <Grid
+            RowSpacing="10"
+            Margin="10"
+            Grid.Row="1"
+            RowDefinitions="Auto, Auto, Auto, Auto, Auto, *, Auto">
+            <Entry
                 Text="{Binding Name}"
-                Placeholder="Nom"/>
+                Placeholder="{Static Translations:AppResources.Name}"/>
             <!-- description de la ressource -->
             <Editor
+                Grid.Row="1"
                 Text="{Binding Description}"
-                Placeholder="Description"
+                Placeholder="{Static Translations:AppResources.Description}"
                 HeightRequest="100"
                 IsTextPredictionEnabled="true"/>
             <!-- Lien de la photo -->
 
-            <StackLayout Spacing="10" Orientation="Horizontal">
+            <StackLayout Spacing="10" Orientation="Horizontal" Grid.Row="2">
                 <Label
                     VerticalOptions="Center"
-                    Text="Lien de l'image : "/>
+                    Text="{Static Translations:AppResources.PictureLink}"/>
                 <Entry 
-                    Text="{Binding Picture, Mode=OneWay}"
-                    Placeholder="Lien de l'image"
+                    Text="{Binding Picture}"
+                    Placeholder="{Static Translations:AppResources.PictureLink}"
                     HorizontalOptions="FillAndExpand"/>
             </StackLayout>
 
-            <StackLayout Spacing="10" Orientation="Horizontal">
-                <Label
-                    VerticalOptions="Center"
-                    Text="Adresse : "/>
+            <Grid
+                Grid.Row="3"
+                ColumnSpacing="10"
+                ColumnDefinitions="30, *">
+                <Image
+                    Style="{StaticResource IconImage}"
+                    Source="pin"/>
                 <Entry
+                    Grid.Column="1"
                     Text="{Binding Adress}"
                     HorizontalOptions="FillAndExpand"
-                    Placeholder="Addresse"/>
-            </StackLayout>
+                    Placeholder="{Static Translations:AppResources.Address}"/>
+            </Grid>
             
 
-            <StackLayout Spacing="10" Orientation="Horizontal">
-                <Label
-                    VerticalOptions="Center"
-                    Text="Type : "/>
+            <Grid
+                Grid.Row="4"
+                ColumnSpacing="10"
+                ColumnDefinitions="30, *, 30, *">
+                <Image
+                    Style="{StaticResource IconImage}"
+                    Source="tags"/>
                 <Picker
+                    Grid.Column="1"
                     HorizontalOptions="FillAndExpand"
-                    Title="Types"
+                    Title="{Static Translations:AppResources.Types}"
                     SelectedItem="{Binding Type}"
-                    ItemsSource="{Binding Types}"/>
-            </StackLayout>
-            
-            <!-- Nombre de place -->
-            <StackLayout Spacing="10" Orientation="Horizontal">
-                <Label
-                    VerticalOptions="Center"
-                    Text="Nombre de places :"/>
-                
+                    ItemsSource="{Binding Types}"
+                    ItemDisplayBinding="{Binding Name}"/>
+
+                <Image
+                    Grid.Column="2"
+                    Style="{StaticResource IconImage}"
+                    Source="peoples"/>
                 <Entry
+                    Grid.Column="3"
                     Keyboard="Numeric"
                     Text="{Binding Capacity}"
-                    Placeholder="Nombre de place"/>
-            </StackLayout>
+                    Placeholder="{Static Translations:AppResources.NumberOfPlaces}"/>
+            </Grid>
             
-            <CollectionView ItemsSource="{Binding Options}" HeightRequest="100" x:Name="optionsList">
+            <CollectionView ItemsSource="{Binding Options}" VerticalOptions="FillAndExpand" x:Name="optionsList" Grid.Row="5">
                 <CollectionView.ItemsLayout>
                     <GridItemsLayout Orientation="Vertical" Span="2" VerticalItemSpacing="5" HorizontalItemSpacing="5"/>
                 </CollectionView.ItemsLayout>
@@ -88,8 +100,10 @@
 
             <!-- bouton de confirmation -->
             <Button
+                Grid.Row="6"
+                VerticalOptions="EndAndExpand"
                 Command="{Binding CreateCommand}"
-                Text="Créer">
+                Text="{Static Translations:AppResources.Create}">
                 <Button.Shadow>
                     <Shadow
                         Opacity="0.5"
@@ -98,6 +112,6 @@
                 </Button.Shadow>
             </Button>
 
-        </StackLayout>
+        </Grid>
     </Grid>
 </ContentPage>

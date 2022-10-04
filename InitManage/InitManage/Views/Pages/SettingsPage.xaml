@@ -1,13 +1,14 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:Translations="clr-namespace:InitManage.Resources.Translations"
     xmlns:SettingViewModels="clr-namespace:InitManage.ViewModels.Setting"
     xmlns:Components="clr-namespace:InitManage.Views.Components"
     x:Class="InitManage.Views.Pages.SettingsPage"
     x:DataType="SettingViewModels:SettingsViewModel"
     NavigationPage.HasNavigationBar="False"
-    Title="Paramètres"
+    Title="{Static Translations:AppResources.Parameters}"
     IconImageSource="gear"
     BackgroundColor="{AppThemeBinding Light={StaticResource Light}, Dark={StaticResource Dark}}">
 
@@ -45,7 +46,7 @@
         <StackLayout Margin="20">
             <Label
                 Style="{StaticResource TitleLabel}"
-                Text="Bonjour"/>
+                Text="{Static Translations:AppResources.Hello}"/>
 
             <Label
                 Text="Thomas BERNARD"
@@ -55,7 +56,7 @@
 
             <StackLayout Orientation="Horizontal" Spacing="20" Margin="0, 30">
                 <Label
-                    Text="Dark mode : (préversion)"
+                    Text="{Static Translations:AppResources.DarkMode}"
                     VerticalTextAlignment="Center"/>
                 <Switch
                     IsToggled="{Binding DarkModeEnabled}"/>
@@ -63,7 +64,7 @@
 
             <StackLayout Orientation="Horizontal" Spacing="20">
                 <Label
-                    Text="Recevoir des notifications avant les réservations"
+                    Text="{Static Translations:AppResources.ReceiveNotificationBeforeBooking}"
                     VerticalTextAlignment="Center"/>
                 <Switch
                     IsToggled="{Binding IsNotificationEnabled}"/>
@@ -75,7 +76,7 @@
                 Spacing="20"
                 Margin="0, 30">
                 <Label
-                    Text="Être prévenu avant une réservation"
+                    Text="{Static Translations:AppResources.BeNotifiedBeforeBooking}"
                     VerticalTextAlignment="Center"/>
 
                 <Picker
@@ -88,7 +89,7 @@
 
             <Button
                 Command="{Binding LogoutCommand}"
-                Text="Déconnexion"
+                Text="{Static Translations:AppResources.Logout}"
                 VerticalOptions="EndAndExpand"/>
 
         </StackLayout>

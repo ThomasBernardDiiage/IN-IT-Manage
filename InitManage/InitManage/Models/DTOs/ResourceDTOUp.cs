@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace InitManage.Models.DTOs;
 
-public class ResourceDTOUp : IResourceEntity
+public class ResourceDTOUp
 {
     [JsonProperty("name")]
     public string Name { get; set; }
@@ -14,12 +14,27 @@ public class ResourceDTOUp : IResourceEntity
     [JsonProperty("picture")]
     public string Picture { get; set; }
 
-    [JsonProperty("type")]
-    public string Type { get; set; }
+    [JsonProperty("maxCapacity")]
+    public int MaxCapacity { get; set; }
 
-    [JsonProperty("capacity")]
-    public int Capacity { get; set; }
-    public long Id { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-    public string Image { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-    public string Address { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+    [JsonProperty("position")]
+    public string Position { get; set; }
+
+    [JsonProperty("typeId")]
+    public long TypeId { get; set; }
+
+
+    public ResourceDTOUp()
+    {
+    }
+
+    public ResourceDTOUp(IResourceEntity resource)
+    {
+        Name = resource.Name;
+        Description = resource.Description;
+        Picture = resource.Image;
+        TypeId = resource.TypeId;
+        MaxCapacity = resource.Capacity;
+        Position = resource.Address;
+    }
 }

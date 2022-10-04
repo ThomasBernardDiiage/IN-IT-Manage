@@ -15,8 +15,10 @@ public interface IResourceEntity
 
     string Address { get; set; }
 
-    string Type { get; set; }
-
     int Capacity { get; set; }
+
+    long TypeId { get; set; }
+
+    string TypeName { get; set; }
 }
 

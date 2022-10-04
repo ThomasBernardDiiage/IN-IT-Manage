@@ -1,6 +1,4 @@
-using System;
 using ReactiveUI;
-using InitManage.Models.Entities;
 using DynamicData;
 using System.Collections.ObjectModel;
 using System.Reactive.Linq;
@@ -12,7 +10,7 @@ using InitManage.Models.Interfaces;
 using InitManage.Views.Pages;
 using InitManage.Commons;
 using Sharpnado.TaskLoaderView;
-using InitManage.Views.Popups;
+using InitManage.Resources.Translations;
 
 namespace InitManage.ViewModels.Resource;
 
@@ -55,14 +53,41 @@ public class ResourcesViewModel : BaseViewModel
                 return new Func<ResourceWrapper, bool>(resource => true);
             });
 
+        var typeResourceFilter = this.WhenAnyValue(vm => vm.SelectedType)
+            .Select(query =>
+            {
+                if (query is not null)
+                    return new Func<ResourceWrapper, bool>(r => r?.TypeId == query?.Id);
+                return new Func<ResourceWrapper, bool>(r => true);
+            });
+
+        var typeOptionFilter = this.WhenAnyValue(vm => vm.SelectedType)
+            .Select(query =>
+            {
+                if (query is not null)
+                    return new Func<OptionWrapper, bool>(option => option?.TypeId == query?.Id);
+                return new Func<OptionWrapper, bool>(option => true);
+            });
+
+
+
         _resourcesCache
             .Connect()
             .Filter(searchFilter)
             .Filter(capacityFilter)
             .Filter(addressFilter)
+            .Filter(typeResourceFilter)
             .Bind(out _resources)
             .ObserveOn(RxApp.MainThreadScheduler)
             .Subscribe();
+
+        _optionsCache
+            .Connect()
+            .Filter(typeOptionFilter)
+            .Bind(out _options)
+            .ObserveOn(RxApp.MainThreadScheduler)
+            .Subscribe();
+
 
         StartDate = DateTime.Now;
         EndDate = DateTime.Now.AddDays(1);
@@ -79,17 +104,21 @@ public class ResourcesViewModel : BaseViewModel
         {
             Loader.Load(async _ =>
             {
-                LoadingMessage = "Chargement des resources";
+                LoadingMessage = AppResources.LoadingResources;
                 var resources = await _resourceService.GetResourcesAsync();
+
+                if (resources == null)
+                    throw new Exception("Error when resources recuperation");
+
                 _resourcesCache.AddOrUpdate(resources.Select(r => new ResourceWrapper(r)));
 
                 ResourcesCapacities = resources.Select(r => r.Capacity).OrderBy(x => x).Distinct().ToList();
 
-				LoadingMessage = "Chargement des types";
+				LoadingMessage = AppResources.LoadingTypes;
                 Types = await _typeService.GetTypesAsync();
 
-                LoadingMessage = "Chargement des options";
-                Options = (await _optionService.GetOptionsAsync()).Select(option => new OptionWrapper(option));
+                LoadingMessage = AppResources.LoadingOptions;
+                _optionsCache.AddOrUpdate((await _optionService.GetOptionsAsync()).Select(option => new OptionWrapper(option)));
 
             });
         }
@@ -138,6 +167,12 @@ public class ResourcesViewModel : BaseViewModel
     public ReadOnlyObservableCollection<ResourceWrapper> Resources => _resources;
     #endregion
 
+    #region Dynamic list Options
+    private SourceCache<OptionWrapper, long> _optionsCache = new SourceCache<OptionWrapper, long>(o => o.Id);
+    private readonly ReadOnlyObservableCollection<OptionWrapper> _options;
+    public ReadOnlyObservableCollection<OptionWrapper> Options => _options;
+    #endregion
+
     #region ResourcesCapacities
 
     private List<int> _resourcesCapacities;
@@ -149,17 +184,6 @@ public class ResourcesViewModel : BaseViewModel
 
     #endregion
 
-    #region Options
-
-    private IEnumerable<OptionWrapper> _options;
-    public IEnumerable<OptionWrapper> Options
-    {
-        get => _options;
-        set => this.RaiseAndSetIfChanged(ref _options, value);
-    }
-
-    #endregion
-    
     #region Types
 
     private IEnumerable<ITypeEntity> _types;
@@ -173,8 +197,8 @@ public class ResourcesViewModel : BaseViewModel
 
     #region SelectedType
 
-    private string _selectedType;
-    public string SelectedType
+    private ITypeEntity _selectedType;
+    public ITypeEntity SelectedType
     {
         get => _selectedType;
         set => this.RaiseAndSetIfChanged(ref _selectedType, value);
@@ -219,23 +243,19 @@ public class ResourcesViewModel : BaseViewModel
 
     #region Methods & Commands
 
+    #region OnResourceTappedCommand
     public ReactiveCommand<IResourceEntity, Task> ResourceTappedCommand { get; private set; }
     private async Task OnResourceTappedCommand(IResourceEntity resource)
     {
         var parameters = new NavigationParameters { { Constants.ResourceIdNavigationParameter, resource?.Id } };
-        await NavigationService.NavigateAsync(nameof(ResourcePage), parameters);
+        await NavigationService.NavigateAsync(Constants.ResourcePage, parameters);
     }
-
-    #region OnOptionEntryTappedCommand
-
-    public ReactiveCommand<Unit, Unit> OptionEntryTappedCommand { get; private set; }
-    private async Task OnOptionEntryTappedCommand()
-    {
-        IsOptionsVisible = !IsOptionsVisible;
-    }
-
     #endregion
 
+    #region OnOptionEntryTappedCommand
+    public ReactiveCommand<Unit, Unit> OptionEntryTappedCommand { get; private set; }
+    private async Task OnOptionEntryTappedCommand() => IsOptionsVisible = !IsOptionsVisible;
+    #endregion
 
     #endregion
 }

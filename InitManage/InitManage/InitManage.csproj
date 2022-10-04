@@ -96,6 +96,7 @@
 	  <None Remove="Sharpnado.Maui.TaskLoaderView" />
 	  <None Remove="SkiaSharp.Extended.UI.Maui" />
 	  <None Remove="Views\Controls\" />
+	  <None Remove="ViewModels\Booking\" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="Views\DataTemplates\" />
@@ -109,6 +110,7 @@
 	  <Folder Include="Models\Wrappers\" />
 	  <Folder Include="Commons\Enums\" />
 	  <Folder Include="Platforms\MacCatalyst\Helpers\" />
+	  <Folder Include="ViewModels\Booking\" />
 	</ItemGroup>
 	<ItemGroup>
 	  <MauiXaml Update="Views\Controls\Loader.xaml">

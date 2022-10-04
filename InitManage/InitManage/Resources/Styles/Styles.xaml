@@ -37,6 +37,11 @@
         <Setter Property="HeightRequest" Value="25"/>
     </Style>
 
+    <Style TargetType="Frame">
+        <Setter Property="HasShadow" Value="False"/>
+        <Setter Property="Padding" Value="0"/>
+    </Style>
+
     <Style TargetType="NavigationPage">
         <Setter Property="BarTextColor" Value="{StaticResource White}"/>
         <Setter Property="BarBackgroundColor" Value="{StaticResource Primary}"/>

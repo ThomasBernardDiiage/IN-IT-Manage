@@ -1,4 +1,5 @@
 ﻿using InitManage.Helpers.Interfaces;
+using InitManage.ViewModels.Booking;
 using InitManage.ViewModels.Resource;
 using InitManage.ViewModels.Setting;
 
@@ -24,8 +25,8 @@ public partial class MainTabbedPage : TabbedPage
         resourcesPage.BindingContext = ContainerLocator.Container.Resolve<ResourcesViewModel>();
         this.Children.Add(resourcesPage);
 
-        var myResourcesPage = ContainerLocator.Container.Resolve<MyResourcesPage>();
-        myResourcesPage.BindingContext = ContainerLocator.Container.Resolve<MyResourcesViewModel>();
+        var myResourcesPage = ContainerLocator.Container.Resolve<BookingsPage>();
+        myResourcesPage.BindingContext = ContainerLocator.Container.Resolve<BookingsViewModel>();
         this.Children.Add(myResourcesPage);
 
         var settingPage = ContainerLocator.Container.Resolve<SettingsPage>();

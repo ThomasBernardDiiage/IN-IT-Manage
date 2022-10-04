@@ -3,11 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:Wrappers="clr-namespace:InitManage.Models.Wrappers"
              x:DataType="Wrappers:BookingWrapper"
-             x:Class="InitManage.Views.DataTemplates.BookingDataTemplate">
+             x:Class="InitManage.Views.DataTemplates.BookingHistoryDataTemplate">
         <Frame
             Margin="0, 5"
             BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}"
-            HasShadow="False"
             CornerRadius="10"
             Padding="10">
             <StackLayout Padding="5">

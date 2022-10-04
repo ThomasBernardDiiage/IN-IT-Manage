@@ -1,4 +1,3 @@
-using System;
 using ReactiveUI;
 using InitManage.Models.Entities;
 using DynamicData;
@@ -7,8 +6,7 @@ using System.Reactive.Linq;
 using InitManage.Services.Interfaces;
 using System.Reactive;
 using InitManage.Models.Wrappers;
-using DynamicData.PLinq;
-using InitManage.Views.Pages;
+using InitManage.Commons;
 using InitManage.Models.Interfaces;
 
 namespace InitManage.ViewModels.Resource;
@@ -16,12 +14,36 @@ namespace InitManage.ViewModels.Resource;
 public class CreateResourceViewModel : BaseViewModel
 {
     private readonly IResourceService _resourceService;
+    private readonly IOptionService _optionService;
+    private readonly ITypeService _typeService;
 
-    public CreateResourceViewModel(INavigationService navigationService, IResourceService resourceService) : base(navigationService)
+    public CreateResourceViewModel(
+        INavigationService navigationService,
+        IResourceService resourceService,
+        IOptionService optionService,
+        ITypeService typeService) : base(navigationService)
     {
         _resourceService = resourceService;
+        _optionService = optionService;
+        _typeService = typeService;
 
-        CreateCommand = ReactiveCommand.CreateFromTask(OnCreateCommand);
+
+
+        var canExecuteCreate = this.WhenAnyValue(vm => vm.Name, vm => vm.Description, vm => vm.Picture, vm => vm.Adress, vm => vm.Type, vm => vm.Capacity)
+                .Select(query =>
+                {
+                    var IsNameOk = !string.IsNullOrEmpty(Name);
+                    var IDescriptionOk = !string.IsNullOrEmpty(Description);
+                    var IsPictureOk = !string.IsNullOrEmpty(Picture);
+                    var IsAdressOk = !string.IsNullOrEmpty(Adress);
+                    var IsTypeOk = Type != null;
+                    var IsCapacityOk = Capacity > 0;
+
+                    return IsNameOk && IDescriptionOk && IsAdressOk && IsTypeOk && IsCapacityOk && IsPictureOk;
+                })
+                .ObserveOn(RxApp.MainThreadScheduler);
+
+        CreateCommand = ReactiveCommand.CreateFromTask(OnCreateCommand, canExecuteCreate);
 
         _optionsCache
             .Connect()
@@ -29,31 +51,21 @@ public class CreateResourceViewModel : BaseViewModel
             .ObserveOn(RxApp.MainThreadScheduler)
             .Subscribe();
 
-        var options = new List<OptionWrapper>()
-        {
-            new OptionWrapper(1, "Machine à café", 1, false),
-            new OptionWrapper(2, "Machine à thé", 1, true),
-            new OptionWrapper(3, "Vidéo projecteur", 1, false),
-            new OptionWrapper(4, "Cage de foot", 2, false),
-            new OptionWrapper(5, "Cage de foot", 2, false),
-            new OptionWrapper(6, "Cage de foot", 2, false),
-            new OptionWrapper(7, "Cage de foot", 2, false),
-            new OptionWrapper(8, "Cage de foot", 2, false),
-            new OptionWrapper(9, "Cage de foot", 2, false),
-        };
 
-        _optionsCache.AddOrUpdate(options);
-
-        Types = new List<string>() { "Salle de réunion", "Salle de classe", "Voiture" };
         Picture = "https://image.jimcdn.com/app/cms/image/transf/dimension=940x10000:format=jpg/path/s398965e309713775/image/ia5d911c472440089/version/1478270869/image.jpg";
     }
 
     #region Life cycle
 
-    protected override async Task OnNavigatedToAsync(INavigationParameters parameters)
+    protected override async Task OnAppearingAsync()
     {
-        await base.OnNavigatedToAsync(parameters);
+        await base.OnAppearingAsync();
 
+        var options = await _optionService.GetOptionsAsync();
+        _optionsCache.AddOrUpdate(options.Select(option => new OptionWrapper(option)));
+
+
+        Types = await _typeService.GetTypesAsync();
     }
 
     #endregion
@@ -106,8 +118,8 @@ public class CreateResourceViewModel : BaseViewModel
 
     #region Type
 
-    private string _type;
-    public string Type
+    private ITypeEntity _type;
+    public ITypeEntity Type
     {
         get => _type;
         set => this.RaiseAndSetIfChanged(ref _type, value);
@@ -117,8 +129,8 @@ public class CreateResourceViewModel : BaseViewModel
 
     #region Types
 
-    private IEnumerable<string> _types;
-    public IEnumerable<string> Types
+    private IEnumerable<ITypeEntity> _types;
+    public IEnumerable<ITypeEntity> Types
     {
         get => _types;
         set => this.RaiseAndSetIfChanged(ref _types, value);
@@ -155,19 +167,18 @@ public class CreateResourceViewModel : BaseViewModel
     {
         var resource = new ResourceEntity()
         {
-            Id = new Random().Next(500),
             Name = _name,
             Capacity = _capacity,
             Description = _description,
             Image = _picture,
             Address = _adress,
-            Type = "Salle de réunion"
+            TypeId = Type.Id
         };
 
         var resourceCreated = await _resourceService.CreateResource(resource);
 
         if (resourceCreated)
-            await NavigationService.NavigateAsync($"{nameof(MainTabbedPage)}?selectedTab={nameof(ResourcesPage)}");
+            await NavigationService.NavigateAsync($"{Constants.MainTabbedPage}?{KnownNavigationParameters.SelectedTab}={Constants.ResourcesPage}");
     }
 	#endregion
 

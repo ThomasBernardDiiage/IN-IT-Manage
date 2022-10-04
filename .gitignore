@@ -4,3 +4,4 @@ obj
 .vs
 InitManage/InitManage/InitManage.csproj.user
 *.user
+.idea

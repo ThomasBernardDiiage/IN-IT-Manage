@@ -14,17 +14,20 @@ public class ResourceDTODown : IResourceEntity
     [JsonProperty("description")]
     public string Description { get; set; }
 
-    [JsonProperty("image")]
+    [JsonProperty("picture")]
     public string Image { get; set; }
 
-    [JsonProperty("type")]
-    public string Type { get; set; }
-
-    [JsonProperty("capacity")]
+    [JsonProperty("maxCapacity")]
     public int Capacity { get; set; }
 
-    [JsonProperty("address")]
+    [JsonProperty("position")]
     public string Address { get; set; }
+
+    [JsonProperty("typeId")]
+    public long TypeId { get; set; }
+
+    [JsonProperty("typeName")]
+    public string TypeName { get; set; }
 
 
     public ResourceDTODown()
@@ -37,7 +40,8 @@ public class ResourceDTODown : IResourceEntity
         Name = resource.Name;
         Description = resource.Description;
         Image = resource.Image;
-        Type = resource.Type;
+        TypeId = resource.TypeId;
+        TypeName = resource.TypeName;
         Capacity = resource.Capacity;
     }
 }

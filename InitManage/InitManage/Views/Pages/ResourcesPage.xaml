@@ -3,16 +3,17 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:ResourceViewModels="clr-namespace:InitManage.ViewModels.Resource"
+    xmlns:Translations="clr-namespace:InitManage.Resources.Translations"
     xmlns:DataTemplates="clr-namespace:InitManage.Views.DataTemplates"
+    xmlns:Commons="clr-namespace:InitManage.Commons"
     xmlns:Controls="clr-namespace:InitManage.Views.Controls"
     xmlns:sharpnado="clr-namespace:Sharpnado.TaskLoaderView;assembly=Sharpnado.Maui.TaskLoaderView"
-    xmlns:skia="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"
     x:Class="InitManage.Views.Pages.ResourcesPage"
     x:DataType="ResourceViewModels:ResourcesViewModel"
     BackgroundColor="{AppThemeBinding Light={StaticResource Light}, Dark={StaticResource Dark}}"
     NavigationPage.HasNavigationBar="False"
-    IconImageSource="book"
-    Title="Menu">
+    IconImageSource="{Static Commons:Constants.BookImage}"
+    Title="{Static Translations:AppResources.Home}">
 
     <sharpnado:TemplatedTaskLoader TaskLoaderNotifier="{Binding Loader}">
         <sharpnado:TemplatedTaskLoader.ResultControlTemplate>
@@ -22,22 +23,22 @@
                     BindingContext="{Binding Source={RelativeSource AncestorType={x:Type ResourceViewModels:ResourcesViewModel}}}">
                   
                     <Ellipse
-                        Fill="{StaticResource Orange200}"
                         Margin="160"
                         Grid.Row="1"
                         WidthRequest="50"
                         HeightRequest="50"
                         VerticalOptions="End"
-                        HorizontalOptions="End"/>
+                        HorizontalOptions="End"
+                        Fill="{StaticResource Orange200}"/>
 
                     <Ellipse
-                        Fill="{StaticResource Orange100}"
                         Margin="70"
                         Grid.Row="1"
                         WidthRequest="100"
                         HeightRequest="100"
                         VerticalOptions="End"
-                        HorizontalOptions="End"/>
+                        HorizontalOptions="End"
+                        Fill="{StaticResource Orange100}"/>
 
                     <Ellipse
                         Margin="-90"
@@ -47,118 +48,132 @@
                         VerticalOptions="End"
                         HorizontalOptions="End"/>
                   
-                    <Grid Margin="10" RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto" RowSpacing="5">
+                    <Grid
+                        Margin="10"
+                        RowSpacing="5"
+                        ColumnSpacing="10"
+                        ColumnDefinitions="25, *, 25, *"
+                        RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto">
 
                         <Label
+                            Grid.ColumnSpan="4"
                             Style="{StaticResource TitleLabel}"
-                            Text="Toutes les réservations"/>
+                            Text="{Static Translations:AppResources.AllReservations}"/>
 
-                        <Grid
+                        <Image
                             Grid.Row="1"
-                            ColumnSpacing="10"
-                            ColumnDefinitions="Auto, *">
-                            <Image
-                                Style="{StaticResource IconImage}"
-                                Source="magnifying_glass"/>
-                            <Entry
-                                Grid.Column="1"
-                                HorizontalOptions="FillAndExpand"
-                                Placeholder="Entrez votre recherche"
-                                Text="{Binding SearchBarText}"/>
-                        </Grid>
+                            Style="{StaticResource IconImage}"
+                            Source="{Static Commons:Constants.MagnifyingGlassImage}"/>
+                        <Entry
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            Grid.ColumnSpan="3"
+                            Text="{Binding SearchBarText}"
+                            Placeholder="{Static Translations:AppResources.EnterYourSearch}"/>
 
-                        <Grid
+                        <Image
                             Grid.Row="2"
-                            ColumnSpacing="10"
-                            ColumnDefinitions="Auto, *">
-                            <Image
-                                Style="{StaticResource IconImage}"
-                                Source="pin"/>
-                            <Entry
-                                Grid.Column="1"
-                                HorizontalOptions="FillAndExpand"
-                                Placeholder="Entrez l'adresse"
-                                Text="{Binding Address}"/>
-                        </Grid>
+                            Style="{StaticResource IconImage}"
+                            Source="{Static Commons:Constants.PinImage}"/>
+                        <Entry
+                            Grid.Row="2"
+                            Grid.Column="1"
+                            Grid.ColumnSpan="3"
+                            Text="{Binding Address}"
+                            Placeholder="{Static Translations:AppResources.EnterTheAddress}"/>
 
-
-                        <Grid
-                            ColumnSpacing="10"
+                        <Image
                             Grid.Row="3"
-                            ColumnDefinitions="Auto, *, Auto, *">
-                            <Image
-                                Style="{StaticResource IconImage}"
-                                Source="peoples"/>
-                            <Picker
-                                Title="Places"
-                                Grid.Column="1"
-                                HorizontalOptions="FillAndExpand"
-                                SelectedItem="{Binding SelectedCapacity}"
-                                ItemsSource="{Binding ResourcesCapacities}"/>
+                            Style="{StaticResource IconImage}"
+                            Source="{Static Commons:Constants.PeoplesImage}"/>
+                        <Picker
+                            Grid.Row="3"
+                            Grid.Column="1"
+                            SelectedItem="{Binding SelectedCapacity}"
+                            ItemsSource="{Binding ResourcesCapacities}"
+                            Title="{Static Translations:AppResources.Places}"/>
 
-                            <Image
-                                Grid.Column="2"
-                                Style="{StaticResource IconImage}"
-                                Source="tags"/>
-                            <Picker
-                                Grid.Column="3"
-                                HorizontalOptions="FillAndExpand"
-                                Title="Types"
-                                SelectedItem="{Binding SelectedType}"
-                                ItemsSource="{Binding Types}"
-                                ItemDisplayBinding="{Binding Name}"/>
-                        </Grid>
+                        <Image
+                            Grid.Row="3"
+                            Grid.Column="2"
+                            Style="{StaticResource IconImage}"
+                            Source="{Static Commons:Constants.TagsImage}"/>
+                        <Picker
+                            Grid.Row="3"
+                            Grid.Column="3"
+                            ItemsSource="{Binding Types}"
+                            ItemDisplayBinding="{Binding Name}"
+                            SelectedItem="{Binding SelectedType}"
+                            Title="{Static Translations:AppResources.Types}"/>
 
+                        <Image
+                            Grid.Row="4"
+                            Style="{StaticResource IconImage}"
+                            Source="{Static Commons:Constants.CalendarImage}"/>
+                        <DatePicker
+                            Grid.Row="4"
+                            Grid.Column="1"
+                            Date="{Binding StartDate}"
+                            MaximumDate="{Binding EndDate}"/>
+                            
+                        <Image
+                            Grid.Row="4"
+                            Grid.Column="2"
+                            Style="{StaticResource IconImage}"
+                            Source="{Static Commons:Constants.CalendarImage}"/>
 
-                        <Grid ColumnDefinitions="*, Auto, *" Grid.Row="4">
-                            <DatePicker
-                                Date="{Binding StartDate}"
-                                MaximumDate="{Binding EndDate}"/>
-                            <Label
-                                Text="=>"
-                                Grid.Column="1"
-                                VerticalOptions="Center"/>
-                            <DatePicker
-                                Grid.Column="2"
-                                Date="{Binding EndDate}"
-                                MinimumDate="{Binding StartDate}"/>
-                        </Grid>
+                        <DatePicker
+                            Grid.Row="4"
+                            Grid.Column="3"
+                            Date="{Binding EndDate}"
+                            MinimumDate="{Binding StartDate}"/>
 
-                        <Grid
+                        <Image
                             Grid.Row="5"
-                            ColumnSpacing="10"
-                            ColumnDefinitions="Auto, *">
-                            <Image
-                                Source="toolbox"
-                                Style="{StaticResource IconImage}"/>
-                            <Entry
-                                Grid.Column="1"
-                                Placeholder="Selectionnez des options"
-                                Text="{Binding Options, Converter={StaticResource ListToStringValueConverter}, Mode=OneWay}"
-                                InputTransparent="True"
-                                HorizontalOptions="FillAndExpand"
-                                IsReadOnly="True"/>
-                            <Grid.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding OptionEntryTappedCommand}"/>
-                            </Grid.GestureRecognizers>
-                        </Grid>
-                        <CollectionView
-                            HeightRequest="150"
-                            ItemsSource="{Binding Options}"
-                            Grid.Row="7"
-                            IsVisible="{Binding IsOptionsVisible}">
-                            <CollectionView.ItemsLayout>
-                                <GridItemsLayout Orientation="Vertical" Span="2" VerticalItemSpacing="5" HorizontalItemSpacing="5"/>
-                            </CollectionView.ItemsLayout>
-                            <CollectionView.ItemTemplate>
-                                <DataTemplate>
-                                    <DataTemplates:OptionDataTemplate/>
-                                </DataTemplate>
-                            </CollectionView.ItemTemplate>
-                        </CollectionView>
-                    </Grid>
+                            Style="{StaticResource IconImage}"
+                            Source="{Static Commons:Constants.ToolboxImage}"/>
 
-                 
+                        <StackLayout
+                            Grid.Row="5"
+                            Grid.Column="1"
+                            Grid.ColumnSpan="3">
+                            <Entry
+                                IsReadOnly="True"
+                                Grid.ColumnSpan="3"
+                                InputTransparent="True"
+                                Placeholder="{Static Translations:AppResources.SelectOptions}"
+                                Text="{Binding Options, Converter={StaticResource ListToStringValueConverter}, Mode=OneWay}">
+                            </Entry>
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding OptionEntryTappedCommand}"/>
+                            </StackLayout.GestureRecognizers>
+                        </StackLayout>
+
+                        <StackLayout
+                            Grid.Row="6"
+                            Grid.ColumnSpan="4"
+                            HeightRequest="150"
+                            IsVisible="{Binding IsOptionsVisible}">
+                            <CollectionView
+                                HeightRequest="150"
+                                ItemsSource="{Binding Options}">
+                                <CollectionView.ItemsLayout>
+                                    <GridItemsLayout Orientation="Vertical" Span="2" VerticalItemSpacing="5" HorizontalItemSpacing="5"/>
+                                </CollectionView.ItemsLayout>
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate>
+                                        <DataTemplates:OptionDataTemplate/>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                                <CollectionView.EmptyView>
+                                    <Label
+                                        HorizontalOptions="Center"
+                                        Text="{Static Translations:AppResources.NoOptionResult}"/>
+                                </CollectionView.EmptyView>
+                            </CollectionView>
+                        </StackLayout>
+                        
+                    </Grid>
 
                     <CollectionView
                         Grid.Row="1"
@@ -169,6 +184,11 @@
                                 <DataTemplates:ResourceDataTemplate/>
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
+                        <CollectionView.EmptyView>
+                            <Label
+                                HorizontalOptions="Center"
+                                Text="{Static Translations:AppResources.NoResourceResult}"/>
+                        </CollectionView.EmptyView>
                     </CollectionView>
                 </Grid>
             </ControlTemplate>
@@ -180,5 +200,12 @@
                     LoadingMessage="{Binding Source={RelativeSource AncestorType={x:Type ResourceViewModels:ResourcesViewModel}}, Path=LoadingMessage}"/>
             </ControlTemplate>
         </sharpnado:TemplatedTaskLoader.LoadingControlTemplate>
+        <sharpnado:TemplatedTaskLoader.ErrorControlTemplate>
+            <ControlTemplate>
+                <Label
+                    HorizontalOptions="Center"
+                    Text="{Static Translations:AppResources.ServerError}"/>
+            </ControlTemplate>
+        </sharpnado:TemplatedTaskLoader.ErrorControlTemplate>
     </sharpnado:TemplatedTaskLoader>
 </ContentPage>

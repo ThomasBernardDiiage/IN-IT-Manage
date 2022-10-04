@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:DataTemplates="clr-namespace:InitManage.Views.DataTemplates"
              xmlns:ResourceViewModels="clr-namespace:InitManage.ViewModels.Resource"
+             xmlns:Translations="clr-namespace:InitManage.Resources.Translations"
              xmlns:Components="clr-namespace:InitManage.Views.Components"
              x:Class="InitManage.Views.Pages.ResourcePage"
              x:DataType="ResourceViewModels:ResourceViewModel"
@@ -55,14 +56,14 @@
             <StackLayout Orientation="Horizontal" Spacing="10">
                     <Label
                         FontSize="18"
-                        Text="Réserver la salle le"
+                        Text="{Static Translations:AppResources.BookThe}"
                         VerticalOptions="Center"/>
                     <DatePicker
                         HorizontalOptions="FillAndExpand"/>
                 </StackLayout>
                 <StackLayout Orientation="Horizontal" Spacing="10">
                     <Label
-                        Text="de"
+                        Text="{Static Translations:AppResources.At}"
                         VerticalOptions="Center"/>
                     <TimePicker/>
                     <Label
@@ -72,25 +73,25 @@
                 </StackLayout>
                 <StackLayout Orientation="Horizontal" Spacing="10">
                     <Label
-                        Text="pour"
+                        Text="{Static Translations:AppResources.For}"
                         VerticalOptions="Center"/>
                     <Entry
                         Keyboard="Numeric"/>
 
                     <Label
-                        Text="personnes(s)."
+                        Text="{Static Translations:AppResources.Peoples}"
                         VerticalOptions="Center"/>
 
                 </StackLayout>
 
                 <Button
                     Command="{Binding BookCommand}"
-                    Text="Réserver"/>
+                    Text="{Static Translations:AppResources.Book}"/>
 
                 <CollectionView ItemsSource="{Binding Bookings}">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <DataTemplates:BookingDataTemplate/>
+                            <DataTemplates:BookingHistoryDataTemplate/>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>

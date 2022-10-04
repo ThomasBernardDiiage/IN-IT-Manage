@@ -1,4 +1,4 @@
-﻿using Android.App;
+using Android.App;
 using Android.Content;
 using Android.Content.PM;
 using Android.OS;
@@ -58,6 +58,14 @@ public class MainActivity : MauiAppCompatActivity
         FirebaseCloudMessagingImplementation.ChannelId = channelId;
         //FirebaseCloudMessagingImplementation.SmallIconRef = Resource.Drawable.ic_push_small;
     }
+
+	/// <summary>
+	/// Disable back button action Android
+	/// </summary>
+	public override void OnBackPressed()
+	{
+		Console.WriteLine("Back button pressed");
+	}
 
 }
 

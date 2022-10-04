@@ -1,34 +1,55 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:Wrappers="clr-namespace:InitManage.Models.Wrappers"
+             x:DataType="Wrappers:BookingWrapper"
              x:Class="InitManage.Views.DataTemplates.DetailledResourceDataTemplate">
-            <StackLayout Margin="5, 5">
-                <Frame HasShadow="False" BackgroundColor="{StaticResource Dark}" CornerRadius="10" Padding="5">
-                    <Grid
-                        ColumnSpacing="10"
-                        RowDefinitions="Auto, Auto, Auto"
-                        ColumnDefinitions="3*, 7*">
+    <StackLayout Margin="5, 5">
+        <Frame
+            BackgroundColor="{StaticResource Dark}"
+            CornerRadius="10"
+            Padding="5">
+            <Grid
+                ColumnSpacing="10"
+                RowDefinitions="Auto, Auto, Auto, Auto"
+                ColumnDefinitions="3*, 7*">
 
-                        <Image Aspect="Fill" Source="https://www.createur-entreprise.net/wp-content/uploads/2021/04/salle-reunion.png" Grid.RowSpan="3" HeightRequest="100" BackgroundColor="Black"/>
-                        <Label
-                            Grid.Column="1"
-                            FontAttributes="Bold"
-                            FontSize="20"
-                            Text="Salle de réunion"
-                            TextColor="{StaticResource Primary}"/>
-                        <Label
-                            TextColor="{StaticResource White}"
-                            Grid.Column="1"
-                            Grid.Row="1"
-                            Margin="0,0,20,0"
-                            Text="Cette salle de réunion est très spacieuse"/>
+                <Image
+                    Aspect="Fill"
+                    Source="{Binding Resource.Image}"
+                    Grid.RowSpan="3"
+                    HeightRequest="100"
+                    BackgroundColor="Black"/>
+                <Label
+                    Grid.Column="1"
+                    FontAttributes="Bold"
+                    FontSize="20"
+                    Text="{Binding Resource.Name}"
+                    TextColor="{StaticResource Primary}"/>
 
-                        <StackLayout Grid.Row="2" Grid.Column="1">
-                            <Label TextColor="{StaticResource White}" Text="{Binding Type}"/>
+                <Label
+                    VerticalOptions="StartAndExpand"
+                    VerticalTextAlignment="Start"
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    TextColor="{StaticResource Light}"
+                    Text="{Binding Start, StringFormat='Le {0:dd/MM/yyyy}'}"/>
 
-                        </StackLayout>
-                    </Grid>
-                </Frame>
-            </StackLayout>
+                <Label
+                    VerticalOptions="EndAndExpand"
+                    VerticalTextAlignment="End"
+                    TextColor="{StaticResource Light}"
+                    Grid.Column="1"
+                    Grid.Row="2">
+                     <Label.Text>
+                         <MultiBinding StringFormat="De {0:hh:mm} à {1:hh:mm}">
+                             <Binding Path="Start"/>
+                             <Binding Path="End"/>
+                         </MultiBinding>
+                     </Label.Text>
+                </Label>
+            </Grid>
+        </Frame>
+    </StackLayout>
 </ContentView>
 

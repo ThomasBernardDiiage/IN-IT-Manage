@@ -1,15 +1,18 @@
 ﻿using System;
+using System.Reactive;
 using InitManage.Models.Interfaces;
+using ReactiveUI;
 
 namespace InitManage.Models.Wrappers;
 
-public class BookingWrapper : IBookingEntity
+public class BookingWrapper : ReactiveObject, IBookingEntity
 {
     public BookingWrapper()
     {
+        BookingTappedCommand = new Command(OnBookingTappedCommand);
     }
 
-    public BookingWrapper(IBookingEntity booking)
+    public BookingWrapper(IBookingEntity booking):this()
     {
         Id = booking.Id;
         UserId = booking.UserId;
@@ -28,5 +31,29 @@ public class BookingWrapper : IBookingEntity
 
     public IResourceEntity Resource { get; set; }
     public IUserEntity User { get; set; }
+
+
+    #region IsOverlayVisible
+
+    private bool _isOverlayVisible;
+    public bool IsOverlayVisible
+    {
+        get => _isOverlayVisible;
+        set => this.RaiseAndSetIfChanged(ref _isOverlayVisible, value);
+    }
+
+    #endregion
+
+    #region OnBookingTappedCommand
+
+    public Command BookingTappedCommand { get; private set; }
+    private void OnBookingTappedCommand()
+    {
+        IsOverlayVisible = !IsOverlayVisible;
+        Console.WriteLine("========");
+    }
+
+    #endregion
+
 }
 

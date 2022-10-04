@@ -13,6 +13,7 @@ using Simple.Http;
 using SkiaSharp.Views.Maui.Controls.Hosting;
 using InitManage.Helpers;
 using InitManage.Commons;
+using InitManage.ViewModels.Booking;
 
 #if IOS
 using InitManage.Platforms.iOS.Helpers;
@@ -43,7 +44,7 @@ public static class MauiProgram
                     containerRegistry.RegisterNavigation();
                     containerRegistry.RegisterHelpers();
                 })
-                .OnAppStart(navigationService => navigationService.NavigateAsync($"{nameof(NavigationPage)}/{nameof(LoginPage)}"))
+                .OnAppStart(navigationService => navigationService.NavigateAsync($"{Constants.NavigationPage}/{Constants.LoginPage}"))
                 )
             .ConfigureFonts(fonts =>
             {
@@ -78,15 +79,16 @@ public static class MauiProgram
 
         containerRegistry.RegisterSingleton<IResourceService, ResourceService>();
         containerRegistry.RegisterSingleton<IUserService, UserService>();
-        containerRegistry.RegisterSingleton<IOptionService, OptionService>();
+        containerRegistry.RegisterSingleton<IOptionService, MockedOptionService>();
         containerRegistry.RegisterSingleton<ITypeService, TypeService>();
-	}
+        containerRegistry.RegisterSingleton<IBookingService, MockedBookingService>();
+    }
 
     private static void RegisterNavigation(this IContainerRegistry containerRegistry)
     {
         containerRegistry.RegisterForNavigation<LoginPage, LoginViewModel>();
         containerRegistry.RegisterForNavigation<ResourcesPage, ResourcesViewModel>();
-        containerRegistry.RegisterForNavigation<MyResourcesPage, MyResourcesViewModel>();
+        containerRegistry.RegisterForNavigation<BookingsPage, BookingsViewModel>();
         containerRegistry.RegisterForNavigation<ResourcePage, ResourceViewModel>();
         containerRegistry.RegisterForNavigation<SettingsPage, SettingsViewModel>();
         containerRegistry.RegisterForNavigation<CreateResourcePage, CreateResourceViewModel>();

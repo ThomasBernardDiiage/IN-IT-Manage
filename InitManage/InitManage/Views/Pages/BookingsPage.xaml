@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:DataTemplates="clr-namespace:InitManage.Views.DataTemplates"
+    xmlns:Translations="clr-namespace:InitManage.Resources.Translations"
+    xmlns:BookingViewModels="clr-namespace:InitManage.ViewModels.Booking"
+    xmlns:Controls="clr-namespace:InitManage.Views.Controls"
+    x:Class="InitManage.Views.Pages.BookingsPage"
+    IconImageSource="opened_book"
+    NavigationPage.HasNavigationBar="False"
+    Title="{Static Translations:AppResources.MyReservations}"
+    BackgroundColor="{AppThemeBinding Light={StaticResource Light}, Dark={StaticResource Dark}}"
+    x:DataType="BookingViewModels:BookingsViewModel">
+
+    <Grid RowDefinitions="Auto, *">
+        <Label
+            Margin="10"
+            Style="{StaticResource TitleLabel}"
+            Text="{Static Translations:AppResources.MyReservations}"/>
+
+        <Ellipse
+            Fill="{StaticResource Orange200}"
+            VerticalOptions="End"
+            HorizontalOptions="End"
+            Margin="160"
+            Grid.Row="1"
+            HeightRequest="50"
+            WidthRequest="50"/>
+
+        <Ellipse
+            Fill="{StaticResource Orange100}"
+            VerticalOptions="End"
+            HorizontalOptions="End"
+            Margin="70"
+            Grid.Row="1"
+            HeightRequest="100"
+            WidthRequest="100"/>
+
+        <Ellipse
+            Margin="-90"
+            Grid.Row="1"
+            VerticalOptions="End"
+            HorizontalOptions="End"
+            HeightRequest="200"
+            WidthRequest="200"/>
+
+        <Controls:Loader Grid.Row="1" LoadingMessage="{Binding LoadingMessage}" IsLoaderVisible="{Binding Loader.ShowLoader}"/>
+        <CollectionView
+            Margin="10"
+            ItemsSource="{Binding Bookings}"
+            Grid.Row="1"
+            IsVisible="{Binding Loader.ShowLoader, Converter={StaticResource BoolToRevertBoolValueConverter}}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <DataTemplates:DetailledResourceDataTemplate/>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+            <CollectionView.EmptyView>
+                <Label
+                    HorizontalOptions="Center"
+                    Text="{Static Translations:AppResources.NoBookingResult}"/>
+            </CollectionView.EmptyView>
+        </CollectionView>
+    </Grid>
+</ContentPage>

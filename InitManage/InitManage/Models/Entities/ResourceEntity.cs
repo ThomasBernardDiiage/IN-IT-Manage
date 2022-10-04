@@ -13,10 +13,13 @@ public class ResourceEntity : IResourceEntity
 
     public string Image { get; set; }
 
-    public string Type { get; set; }
-
     public int Capacity { get; set; }
+
     public string Address { get; set; }
+
+    public long TypeId { get; set; }
+
+    public string TypeName { get; set; }
 
 
     public ResourceEntity()
@@ -29,7 +32,8 @@ public class ResourceEntity : IResourceEntity
         Name = resource.Name;
         Description = resource.Description;
         Image = resource.Image;
-        Type = resource.Type;
+        TypeId = resource.TypeId;
+        TypeName = resource.TypeName;
         Capacity = resource.Capacity;
     }
 }
