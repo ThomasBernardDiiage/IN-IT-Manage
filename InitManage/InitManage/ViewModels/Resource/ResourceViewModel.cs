@@ -10,6 +10,7 @@ using InitManage.Views.Pages;
 using ReactiveUI;
 using System.Linq;
 using System.Reactive.Linq;
+using Sharpnado.TaskLoaderView;
 
 namespace InitManage.ViewModels.Resource;
 
@@ -28,6 +29,8 @@ public class ResourceViewModel : BaseViewModel
             .Bind(out _bookings)
             .ObserveOn(RxApp.MainThreadScheduler)
             .Subscribe();
+
+        Loader = new TaskLoaderNotifier();
     }
 
 
@@ -38,10 +41,13 @@ public class ResourceViewModel : BaseViewModel
 
         if (parameters.TryGetValue(Constants.ResourceIdNavigationParameter, out long resourceId))
         {
-            Resource = await _resourceService.GetResourceAsync(resourceId);
-            var bookings = await _resourceService.GetResourceBookingsWrappersAsync(Resource.Id);
+            Loader.Load(async _ =>
+            {
+                Resource = await _resourceService.GetResourceAsync(resourceId);
+                Options = string.Join(", ", Resource?.Options?.Select(option => option.Name));
 
-            _bookingsCache.AddOrUpdate(bookings);
+                //_bookingsCache.AddOrUpdate(bookings);
+            });
         }
         else
             await NavigationService.GoBackAsync();
@@ -50,13 +56,26 @@ public class ResourceViewModel : BaseViewModel
 
     #region Properties
 
+    public TaskLoaderNotifier Loader { get; }
+
     #region Resource
 
-    private IResourceEntity _resource;
-    public IResourceEntity Resource
+    private ResourceWrapper _resource;
+    public ResourceWrapper Resource
     {
         get => _resource;
         set => this.RaiseAndSetIfChanged(ref _resource, value);
+    }
+
+    #endregion
+
+    #region Options
+
+    private string _option;
+    public string Options
+    {
+        get => _option;
+        set => this.RaiseAndSetIfChanged(ref _option, value);
     }
 
     #endregion

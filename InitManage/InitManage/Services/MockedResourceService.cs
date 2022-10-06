@@ -13,9 +13,9 @@ public class MockedResourceService : IResourceService
 {
 
     #region GetResourceAsync
-    public async Task<IResourceEntity> GetResourceAsync(long id)
+    public async Task<ResourceWrapper> GetResourceAsync(long id)
     {
-        var resource = new ResourceEntity
+        var resource = new ResourceWrapper
         {
             Id = 1,
             Capacity = 18,

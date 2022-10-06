@@ -237,4 +237,7 @@
   <data name="ServerError" xml:space="preserve">
     <value>Erreur, impossible de contacter le serveur</value>
   </data>
+  <data name="LoadingResource" xml:space="preserve">
+    <value>Chargement de la resource</value>
+  </data>
 </root>

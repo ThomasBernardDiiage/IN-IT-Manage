@@ -2,7 +2,9 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:DataTemplates="clr-namespace:InitManage.Views.DataTemplates"
+             xmlns:Controls="clr-namespace:InitManage.Views.Controls"
              xmlns:ResourceViewModels="clr-namespace:InitManage.ViewModels.Resource"
+             xmlns:sharpnado="clr-namespace:Sharpnado.TaskLoaderView;assembly=Sharpnado.Maui.TaskLoaderView"
              xmlns:Translations="clr-namespace:InitManage.Resources.Translations"
              xmlns:Components="clr-namespace:InitManage.Views.Components"
              x:Class="InitManage.Views.Pages.ResourcePage"
@@ -10,91 +12,119 @@
              Title="{Binding Resource.Name}"
              BackgroundColor="{AppThemeBinding Light={StaticResource Light}, Dark={StaticResource Dark}}">
 
-        <Grid RowDefinitions="200, *">
-            <Image
-                Aspect="AspectFill"
-                Source="{Binding Resource.Image}"/>
+    <sharpnado:TemplatedTaskLoader TaskLoaderNotifier="{Binding Loader}">
+        <sharpnado:TemplatedTaskLoader.LoadingControlTemplate>
+            <ControlTemplate>
+                <Controls:Loader
+                    IsLoaderVisible="true"
+                    LoadingMessage="{Static Translations:AppResources.LoadingResource}"/>
+            </ControlTemplate>
+        </sharpnado:TemplatedTaskLoader.LoadingControlTemplate>
+        <sharpnado:TemplatedTaskLoader.ErrorControlTemplate>
 
-            <StackLayout Margin="20" Spacing="10" Grid.Row="1">
+            <ControlTemplate>
                 <Label
-                    FontSize="18"
-                    FontAttributes="Bold"
-                    Text="{Binding Resource.Description}"/>
-
-                <Grid
-                    RowDefinitions="Auto, Auto"
-                    ColumnDefinitions="Auto, *"
-                    ColumnSpacing="10"
-                    RowSpacing="10">
-
+                    HorizontalOptions="Center"
+                    Text="{Static Translations:AppResources.ServerError}"/>
+            </ControlTemplate>
+        </sharpnado:TemplatedTaskLoader.ErrorControlTemplate>
+        <sharpnado:TemplatedTaskLoader.ResultControlTemplate>
+            <ControlTemplate>
+                <Grid RowDefinitions="200, *"
+                      BindingContext="{Binding Source={RelativeSource AncestorType={x:Type ResourceViewModels:ResourceViewModel}}}">
                     <Image
-                        Style="{StaticResource IconImage}"
-                        Source="pin"/>
-                    <Label
-                        Text="{Binding Resource.Address}"
-                        VerticalOptions="Center"
-                        FontAttributes="Bold"
-                        FontSize="18"
-                        Grid.Column="1"/>
+                        Aspect="AspectFill"
+                        Source="{Binding Resource.Image}"/>
 
-                    <Image
-                        Style="{StaticResource IconImage}"
-                        Grid.Row="1"
-                        Source="peoples"/>
+                    <StackLayout Margin="20" Spacing="10" Grid.Row="1">
+                        <Label
+                            FontSize="18"
+                            FontAttributes="Bold"
+                            Text="{Binding Resource.Description}"/>
+                        <Label Text="{Binding Options}"/>
 
-                    <Label
-                        Grid.Row="1"
-                        Grid.Column="1"
-                        Text="{Binding Resource.Capacity, StringFormat='{0} personne(s) maximum'}"
-                        VerticalOptions="Center"
-                        FontAttributes="Bold"
-                        FontSize="18"/>
+                        <Grid
+                            RowDefinitions="Auto, Auto"
+                            ColumnDefinitions="Auto, *"
+                            ColumnSpacing="10"
+                            RowSpacing="10">
+
+                            <Image
+                                Style="{StaticResource IconImage}"
+                                Source="pin"/>
+                            <Label
+                                Text="{Binding Resource.Address}"
+                                VerticalOptions="Center"
+                                FontAttributes="Bold"
+                                FontSize="18"
+                                Grid.Column="1"/>
+
+                            <Image
+                                Style="{StaticResource IconImage}"
+                                Grid.Row="1"
+                                Source="peoples"/>
+
+                            <Label
+                                Grid.Row="1"
+                                Grid.Column="1"
+                                Text="{Binding Resource.Capacity, StringFormat='{0} personne(s) maximum'}"
+                                VerticalOptions="Center"
+                                FontAttributes="Bold"
+                                FontSize="18"/>
+                        </Grid>
+
+                        <Components:SeparatorComponent/>
+
+                    <StackLayout Orientation="Horizontal" Spacing="10">
+                            <Label
+                                FontSize="18"
+                                Text="{Static Translations:AppResources.BookThe}"
+                                VerticalOptions="Center"/>
+                            <DatePicker
+                                HorizontalOptions="FillAndExpand"/>
+                        </StackLayout>
+                        <StackLayout Orientation="Horizontal" Spacing="10">
+                            <Label
+                                Text="{Static Translations:AppResources.At}"
+                                VerticalOptions="Center"/>
+                            <TimePicker/>
+                            <Label
+                                Text="à"
+                                VerticalOptions="Center"/>
+                            <TimePicker/>
+                        </StackLayout>
+                        <StackLayout Orientation="Horizontal" Spacing="10">
+                            <Label
+                                Text="{Static Translations:AppResources.For}"
+                                VerticalOptions="Center"/>
+                            <Entry
+                                Keyboard="Numeric"/>
+
+                            <Label
+                                Text="{Static Translations:AppResources.Peoples}"
+                                VerticalOptions="Center"/>
+
+                        </StackLayout>
+
+                        <Button
+                            Command="{Binding BookCommand}"
+                            Text="{Static Translations:AppResources.Book}"/>
+
+                        <CollectionView ItemsSource="{Binding Resource.Bookings}">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <DataTemplates:BookingHistoryDataTemplate/>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </StackLayout>
                 </Grid>
 
-                <Components:SeparatorComponent/>
+            </ControlTemplate>
 
-            <StackLayout Orientation="Horizontal" Spacing="10">
-                    <Label
-                        FontSize="18"
-                        Text="{Static Translations:AppResources.BookThe}"
-                        VerticalOptions="Center"/>
-                    <DatePicker
-                        HorizontalOptions="FillAndExpand"/>
-                </StackLayout>
-                <StackLayout Orientation="Horizontal" Spacing="10">
-                    <Label
-                        Text="{Static Translations:AppResources.At}"
-                        VerticalOptions="Center"/>
-                    <TimePicker/>
-                    <Label
-                        Text="à"
-                        VerticalOptions="Center"/>
-                    <TimePicker/>
-                </StackLayout>
-                <StackLayout Orientation="Horizontal" Spacing="10">
-                    <Label
-                        Text="{Static Translations:AppResources.For}"
-                        VerticalOptions="Center"/>
-                    <Entry
-                        Keyboard="Numeric"/>
+        </sharpnado:TemplatedTaskLoader.ResultControlTemplate>
+    </sharpnado:TemplatedTaskLoader>
 
-                    <Label
-                        Text="{Static Translations:AppResources.Peoples}"
-                        VerticalOptions="Center"/>
 
-                </StackLayout>
-
-                <Button
-                    Command="{Binding BookCommand}"
-                    Text="{Static Translations:AppResources.Book}"/>
-
-                <CollectionView ItemsSource="{Binding Bookings}">
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate>
-                            <DataTemplates:BookingHistoryDataTemplate/>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
-            </StackLayout>
-        </Grid>
+        
 </ContentPage>

@@ -1,4 +1,5 @@
 ﻿using System;
+using InitManage.Models.DTOs;
 using InitManage.Models.Interfaces;
 
 namespace InitManage.Models.Wrappers;
@@ -18,6 +19,13 @@ public class ResourceWrapper : IResourceEntity, ISearchable
         TypeId = resource.TypeId;
         TypeName = resource.TypeName;
         Capacity = resource.Capacity;
+        Address = resource.Address;
+    }
+
+    public ResourceWrapper(DetailledResourceDTODown detailledResourceDTODown) : this(resource:detailledResourceDTODown)
+    {
+        Options = detailledResourceDTODown.Options;
+        Bookings = detailledResourceDTODown.Bookings;
     }
 
     public long Id { get; set; }
@@ -29,6 +37,8 @@ public class ResourceWrapper : IResourceEntity, ISearchable
     public string Address { get; set; }
     public long TypeId { get; set; }
     public string TypeName { get; set; }
+    public IEnumerable<IOptionEntity> Options {get; set;}
+    public IEnumerable<IBookingEntity> Bookings { get; set; }
 
 
     public bool IsCorrespondingToSearch(string searchedValue)

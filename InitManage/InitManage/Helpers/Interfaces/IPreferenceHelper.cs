@@ -5,6 +5,7 @@ public interface IPreferenceHelper
 {
     bool IsAdmin { get; set; }
     string Mail { get; set; }
+    string Token { get; set; }
 
 
     TimeSpan TimeBeforeReceiveNotification { get; set; }

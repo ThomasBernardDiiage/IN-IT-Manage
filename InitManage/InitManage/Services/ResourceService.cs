@@ -18,10 +18,13 @@ public class ResourceService : IResourceService
         _httpService = httpService;
     }
 
-    public async Task<IResourceEntity> GetResourceAsync(long id)
+    public async Task<ResourceWrapper> GetResourceAsync(long id)
     {
-        var response = await _httpService.SendRequestAsync<ResourceDTODown>($"{Constants.ApiBaseAdress}{Constants.ResourceEndPoint}/{id}", HttpMethod.Get);
-        return response.Result;
+        var response = await _httpService.SendRequestAsync<DetailledResourceDTODown>($"{Constants.ApiBaseAdress}{Constants.ResourceEndPoint}/{id}", HttpMethod.Get);
+        var wrapper = new ResourceWrapper(response?.Result);
+
+
+        return wrapper;
     }
 
     public Task<IEnumerable<IBookingEntity>> GetResourceBookingsAsync(long resourceId)
@@ -36,7 +39,7 @@ public class ResourceService : IResourceService
 
     public async Task<IEnumerable<IResourceEntity>> GetResourcesAsync()
     {
-        var response = await _httpService.SendRequestAsync<IEnumerable<ResourceDTODown>>($"{Constants.ApiBaseAdress}{Constants.ResourceEndPoint}", HttpMethod.Get);
+        var response = await _httpService.SendRequestAsync<IEnumerable<ResourceDTODown>>($"{Constants.ApiBaseAdress}{Constants.ResourcesEndPoint}", HttpMethod.Get);
         return response?.Result;
     }
 

@@ -20,7 +20,7 @@ public interface IResourceService
     /// </summary>
     /// <param name="id">The id of the resource</param>
     /// <returns></returns>
-    Task<IResourceEntity> GetResourceAsync(long id);
+    Task<ResourceWrapper> GetResourceAsync(long id);
 
     /// <summary>
     /// Return all bookings of a resource

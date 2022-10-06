@@ -45,5 +45,14 @@ public class PreferenceHelper : IPreferenceHelper
         }
     }
     #endregion
+
+
+    #region Token
+    public string Token
+    {
+        get => Preferences.Get(nameof(Token), string.Empty);
+        set => Preferences.Set(nameof(Token), value);
+    }
+    #endregion
 }
 

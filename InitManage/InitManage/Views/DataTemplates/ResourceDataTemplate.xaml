@@ -2,6 +2,7 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:ResourceViewModels="clr-namespace:InitManage.ViewModels.Resource"
+             xmlns:Translations="clr-namespace:InitManage.Resources.Translations"
              xmlns:Wrappers="clr-namespace:InitManage.Models.Wrappers"
              x:Class="InitManage.Views.DataTemplates.ResourceDataTemplate"
              x:DataType="Wrappers:ResourceWrapper">
@@ -32,11 +33,23 @@
                     Margin="0,0,20,0"
                     Text="{Binding Description}"/>
 
-                <StackLayout Grid.Row="2" Grid.Column="1">
-                    <Label
-                        Text="{Binding TypeName}"
-                        TextColor="{StaticResource Light}"/>
-                </StackLayout>
+                <Grid
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    ColumnSpacing="10"
+                    ColumnDefinitions="Auto, Auto"
+                    VerticalOptions="EndAndExpand">
+
+                        <Label
+                            Text="{Binding TypeName}"
+                            TextColor="{StaticResource Light}"/>
+        
+                        <Label
+                            Grid.Column="1"
+                            TextColor="{StaticResource Light}"
+                            Text="{Binding Capacity, StringFormat='{0} peoples'}">
+                        </Label>
+                </Grid>
             </Grid>
             <Frame.GestureRecognizers>
                 <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type ResourceViewModels:ResourcesViewModel}}, Path=ResourceTappedCommand}" CommandParameter="{Binding .}"/>

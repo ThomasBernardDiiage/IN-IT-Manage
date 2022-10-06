@@ -3,30 +3,45 @@ using Newtonsoft.Json;
 
 namespace InitManage.Models.DTOs;
 
+
+
 public class AuthDTODown
 {
-    [JsonProperty("id")]
-    public string Id { get; set; }
+    [JsonProperty("message")]
+    public string Message { get; set; }
 
-    [JsonProperty("mail")]
-    public string Mail { get; set; }
+    [JsonProperty("data")]
+    public AuthDTODownData Data { get; set; }
+}
 
-    [JsonProperty("firstname")]
-    public string Firstname { get; set; }
+public class AuthDTODownUserData
+{
+    [JsonProperty("firstName")]
+    public string FirstName { get; set; }
 
-    [JsonProperty("lastname")]
-    public string Lastname { get; set; }
+    [JsonProperty("lastName")]
+    public string LastName { get; set; }
 
     [JsonProperty("isAdmin")]
     public bool IsAdmin { get; set; }
 }
 
+public class AuthDTODownData
+{
+    [JsonProperty("token")]
+    public string Token { get; set; }
+
+    [JsonProperty("userData")]
+    public AuthDTODownUserData UserData { get; set; }
+}
+
+
 public class AuthDtoUp
 {
-    [JsonProperty("mail")]
-    public string Mail { get; set; }
+    [JsonProperty("username")]
+    public string Username { get; set; }
 
-    [JsonProperty("firstname")]
+    [JsonProperty("password")]
     public string Password { get; set; }
 }
 

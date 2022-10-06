@@ -2,6 +2,7 @@ using System;
 using System.Reactive;
 using InitManage.Helpers.Interfaces;
 using ReactiveUI;
+using InitManage.Services.Interfaces;
 
 namespace InitManage.ViewModels.Setting;
 
@@ -9,14 +10,17 @@ public class SettingsViewModel : BaseViewModel
 {
     private readonly IPreferenceHelper _preferenceHelper;
     private readonly INotificationHelper _notificationHelper;
+    private readonly IUserService _userService;
 
     public SettingsViewModel(
         INavigationService navigationService,
         IPreferenceHelper preferenceHelper,
-        INotificationHelper notificationHelper) : base(navigationService)
+        INotificationHelper notificationHelper,
+        IUserService userService) : base(navigationService)
     {
         _preferenceHelper = preferenceHelper;
         _notificationHelper = notificationHelper;
+        _userService = userService;
 
         LogoutCommand = ReactiveCommand.CreateFromTask(OnLogoutCommand);
 
@@ -100,7 +104,8 @@ public class SettingsViewModel : BaseViewModel
     public ReactiveCommand<Unit, Unit> LogoutCommand { get; private set; }
     private async Task OnLogoutCommand()
     {
-        _preferenceHelper.Mail = string.Empty;
+        await _userService.LogoutAsync();
+
         await NavigationService.GoBackToRootAsync();
     }
     #endregion

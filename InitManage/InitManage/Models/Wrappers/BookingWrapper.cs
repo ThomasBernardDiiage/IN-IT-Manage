@@ -15,7 +15,6 @@ public class BookingWrapper : ReactiveObject, IBookingEntity
     public BookingWrapper(IBookingEntity booking):this()
     {
         Id = booking.Id;
-        UserId = booking.UserId;
         ResourceId = booking.ResourceId;
         Start = booking.Start;
         End = booking.End;
