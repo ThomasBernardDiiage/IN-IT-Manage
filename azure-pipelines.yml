@@ -31,3 +31,16 @@ steps:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
     ArtifactName: 'drop'
     publishLocation: 'Container'
+
+#Your build pipeline references an undefined variable named ‘Parameters.appFiles’. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab. See https://go.microsoft.com/fwlink/?linkid=865972
+
+steps:
+- task: AppCenterDistribute@2
+  displayName: 'Deploy $(build.binariesdirectory)/$(BuildConfiguration)/*.apk to Visual Studio App Center'
+  inputs:
+    serverEndpoint: AppCenter
+    appSlug: 'https://appcenter.ms/users/thomas.bernard-diiage.org/apps/IN-IT-Manage'
+    appFile: '$(Parameters.appFiles)'
+    symbolsIncludeParentDirectory: false
+    releaseNotesInput: 'New release'
+  condition: succeededOrFailed()
