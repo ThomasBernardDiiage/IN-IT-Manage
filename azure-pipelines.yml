@@ -31,14 +31,3 @@ steps:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
     ArtifactName: 'drop'
     publishLocation: 'Container'
-
-
-- task: AppCenterDistribute@3
-  inputs:
-    serverEndpoint: 'AppCenter'
-    appSlug: 'https://appcenter.ms/users/thomas.bernard-diiage.org/apps/IN-IT-Manage'
-    appFile: '$(build.artifactstagingdirectory)/$(BuildConfiguration)/*.apk'
-    symbolsOption: 'Android'
-    releaseNotesOption: 'new release'
-    releaseNotesInput: 'new release (releaseNotesInput)'
-    destinationType: 'groups'
