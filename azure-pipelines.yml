@@ -40,4 +40,5 @@ steps:
     appFile: '$(build.binariesdirectory)/$(BuildConfiguration)/*.apk'
     symbolsOption: 'Android'
     releaseNotesOption: 'new release'
+    releaseNotesInput: 'new release (releaseNotesInput)'
     destinationType: 'groups'
