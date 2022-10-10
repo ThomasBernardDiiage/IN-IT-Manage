@@ -12,6 +12,8 @@ using System.Linq;
 using System.Reactive.Linq;
 using Sharpnado.TaskLoaderView;
 using InitManage.Models.Entities;
+using InitManage.Helpers.Interfaces;
+using InitManage.Resources.Translations;
 
 namespace InitManage.ViewModels.Resource;
 
@@ -19,11 +21,20 @@ public class ResourceViewModel : BaseViewModel
 {
     private readonly IResourceService _resourceService;
     private readonly IBookingService _bookingService;
+    private readonly INotificationHelper _notificationHelper;
+    private readonly IPreferenceHelper _preferenceHelper;
 
-    public ResourceViewModel(INavigationService navigationService, IResourceService resourceService, IBookingService bookingService) : base(navigationService)
+    public ResourceViewModel(
+        INavigationService navigationService,
+        IResourceService resourceService,
+        IBookingService bookingService,
+        INotificationHelper notificationHelper,
+        IPreferenceHelper preferenceHelper) : base(navigationService)
     {
         _resourceService = resourceService;
         _bookingService = bookingService;
+        _notificationHelper = notificationHelper;
+        _preferenceHelper = preferenceHelper;
 
         BookCommand = ReactiveCommand.CreateFromTask(OnBookCommand);
 
@@ -133,8 +144,18 @@ public class ResourceViewModel : BaseViewModel
             End = End
         };
 
-        await _bookingService.CreateBookingAsync(booking);
-        await NavigationService.GoBackAsync();
+        
+
+        if (await _bookingService.CreateBookingAsync(booking))
+        {
+            if (_preferenceHelper.IsNotificationEnabled)
+                _notificationHelper.SendNotification
+                    (AppResources.Reminder, $"{AppResources.YourBookingStartIn} {_preferenceHelper.TimeBeforeReceiveNotification.Minutes} {AppResources.Minutes}", Start.AddMinutes(-_preferenceHelper.TimeBeforeReceiveNotification.Minutes));
+
+
+            await NavigationService.GoBackAsync();
+    
+        }
     }
 
     #endregion
