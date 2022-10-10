@@ -46,7 +46,7 @@ steps:
   inputs:
     serverEndpoint: 'AppCenter'
     appSlug: 'https://appcenter.ms/users/thomas.bernard-diiage.org/apps/IN-IT-Manage'
-    appFile: 'com.companyname.initmanage-Signed.aab'
+    appFile: 'InitManage/InitManage/bin/Release/net6.0-android/com.companyname.initmanage-Signed.aab'
     symbolsOption: 'Android'
     releaseNotesOption: 'input'
     releaseNotesInput: 'New release'
