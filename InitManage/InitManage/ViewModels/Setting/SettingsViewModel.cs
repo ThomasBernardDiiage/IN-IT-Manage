@@ -32,6 +32,13 @@ public class SettingsViewModel : BaseViewModel
         IsNotificationEnabled = _preferenceHelper.IsNotificationEnabled;
     }
 
+    protected async override Task OnAppearingAsync()
+    {
+        await base.OnAppearingAsync();
+
+        Fullname = $"{_preferenceHelper.Firstname} {_preferenceHelper.Lastname}";
+    }
+
     #region Properties
 
     #region DarkModeEnabled
@@ -96,9 +103,21 @@ public class SettingsViewModel : BaseViewModel
     }
     #endregion
 
+    #region Fullname
+
+    private string _fullname;
+    public string Fullname
+    {
+        get => _fullname;
+        set => this.RaiseAndSetIfChanged(ref _fullname, value);
+    }
+
+    #endregion
+
     #endregion
 
     #region Methods & Commands
+
 
     #region OnLogoutCommand
     public ReactiveCommand<Unit, Unit> LogoutCommand { get; private set; }

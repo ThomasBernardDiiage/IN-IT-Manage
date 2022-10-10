@@ -8,22 +8,16 @@ using System.Threading.Tasks;
 
 namespace InitManage.Models.DTOs
 {
-    public class BookingDTOUp : IBookingEntity
+    public class BookingDTOUp
     {
-        [JsonProperty("id")]
-        public long Id { get; set; }
-
-        //[JsonProperty("userId")]
-        //public long UserId { get; set; }
-
-        [JsonProperty("rsourceId")]
+        [JsonProperty("resourceId")]
         public long ResourceId { get; set; }
 
         [JsonProperty("start")]
-        public DateTime Start { get; set; }
+        public string Start { get; set; }
 
         [JsonProperty("end")]
-        public DateTime End { get; set; }
+        public string End { get; set; }
 
         [JsonProperty("capacity")]
         public int Capacity { get; set; }
@@ -35,8 +29,8 @@ namespace InitManage.Models.DTOs
         public BookingDTOUp(IBookingEntity booking)
         {
             ResourceId = booking.ResourceId;
-            Start = booking.Start;
-            End = booking.End;
+            Start = booking.Start.ToString("yyyy-MM-dd hh:mm:ss");
+            End = booking.End.ToString("yyyy-MM-dd hh:mm:ss");
             Capacity = booking.Capacity;
         }
     }

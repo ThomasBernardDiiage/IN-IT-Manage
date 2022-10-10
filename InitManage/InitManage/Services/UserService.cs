@@ -39,6 +39,8 @@ public class UserService : IUserService
 
         if (response?.Result != null)
         {
+            _preferenceHelper.Firstname = response?.Result?.Data?.UserData?.FirstName;
+            _preferenceHelper.Lastname = response?.Result?.Data?.UserData?.LastName;
             _preferenceHelper.Token = response?.Result?.Data?.Token;
             _httpService.HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _preferenceHelper.Token);
 
