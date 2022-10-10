@@ -237,4 +237,13 @@
   <data name="ServerError" xml:space="preserve">
     <value>Error, can't connect to server</value>
   </data>
+  <data name="Reminder" xml:space="preserve">
+    <value>Reminder</value>
+  </data>
+  <data name="YourBookingStartIn" xml:space="preserve">
+    <value>Your booking start in</value>
+  </data>
+  <data name="Minutes" xml:space="preserve">
+    <value>minute(s)</value>
+  </data>
 </root>

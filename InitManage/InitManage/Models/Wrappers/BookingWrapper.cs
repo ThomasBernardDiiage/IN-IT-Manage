@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Reactive;
+using InitManage.Models.DTOs;
+using InitManage.Models.Entities;
 using InitManage.Models.Interfaces;
 using ReactiveUI;
 
@@ -19,6 +21,25 @@ public class BookingWrapper : ReactiveObject, IBookingEntity
         Start = booking.Start;
         End = booking.End;
         Capacity = booking.Capacity;
+    }
+
+    public BookingWrapper(DetailledBookingDTODown detailledBookingDTODown)
+    {
+        Id = detailledBookingDTODown.IdBooking;
+        ResourceId = detailledBookingDTODown.IdResource;
+        Start = detailledBookingDTODown.Start;
+        End = detailledBookingDTODown.End;
+
+        var resource = new ResourceEntity
+        {
+            Id = detailledBookingDTODown.IdResource,
+            Name = detailledBookingDTODown.ResourceName,
+            Description = detailledBookingDTODown.Description,
+            Image = detailledBookingDTODown.Picture,
+            Address = detailledBookingDTODown.Position,
+            Capacity = detailledBookingDTODown.MaxCapacity,
+        };
+        Resource = resource; ;
     }
 
     public long Id { get; set; }

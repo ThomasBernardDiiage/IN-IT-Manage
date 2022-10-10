@@ -13,9 +13,6 @@ namespace InitManage.Models.DTOs
         [JsonProperty("id")]
         public long Id { get; set; }
 
-        //[JsonProperty("userId")]
-        //public long UserId { get; set; }
-
         [JsonProperty("resourceId")]
         public long ResourceId { get; set; }
 

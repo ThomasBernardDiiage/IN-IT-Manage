@@ -8,14 +8,8 @@ using System.Threading.Tasks;
 
 namespace InitManage.Models.DTOs
 {
-    public class BookingDTOUp : IBookingEntity
+    public class BookingDTOUp
     {
-        [JsonProperty("id")]
-        public long Id { get; set; }
-
-        //[JsonProperty("userId")]
-        //public long UserId { get; set; }
-
         [JsonProperty("rsourceId")]
         public long ResourceId { get; set; }
 

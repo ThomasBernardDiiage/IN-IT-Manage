@@ -27,9 +27,16 @@ namespace InitManage.Services
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<BookingWrapper>> GetBookingsWrappersAsync()
+        public async Task<IEnumerable<BookingWrapper>> GetBookingsWrappersAsync()
         {
-            throw new NotImplementedException();
+            var response = await _httpService.SendRequestAsync<IEnumerable<DetailledBookingDTODown>>($"{Constants.ApiBaseAdress}{Constants.BookingEndPoint}/{Constants.UserEndPoint}/1", HttpMethod.Get);
+
+            if (response.HttpStatusCode == HttpStatusCode.OK)
+            {
+                var wrappers = response.Result?.Select(x => new BookingWrapper(x));
+                return wrappers;
+            }
+            return null;
         }
 
         public async Task<bool> CreateBookingAsync(IBookingEntity booking)
