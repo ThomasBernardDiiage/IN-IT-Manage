@@ -76,7 +76,6 @@
 	  <None Remove="Services\" />
 	  <None Remove="Services\Interfaces\" />
 	  <None Remove="CommunityToolkit.Maui" />
-	  <None Remove="Views\Popups\" />
 	  <None Remove="ViewModels\Resource\" />
 	  <None Remove="ViewModels\Setting\" />
 	  <None Remove="Helpers\" />
@@ -102,7 +101,6 @@
 	  <Folder Include="Views\DataTemplates\" />
 	  <Folder Include="Views\Components\" />
 	  <Folder Include="ViewModels\Login\" />
-	  <Folder Include="Views\Popups\" />
 	  <Folder Include="ViewModels\Setting\" />
 	  <Folder Include="Helpers\" />
 	  <Folder Include="Helpers\Interfaces\" />
@@ -147,12 +145,6 @@
 	    <SubType></SubType>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\Components\SeparatorComponent.xaml">
-	    <SubType></SubType>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Popups\ToolKitIsBusyPopup.xaml">
-	    <SubType></SubType>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Popups\ToolkitBasicPopup.xaml">
 	    <SubType></SubType>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\DataTemplates\OptionDataTemplate.xaml">
