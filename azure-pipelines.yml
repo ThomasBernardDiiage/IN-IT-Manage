@@ -1,4 +1,5 @@
 # Starter pipeline
+
 # Start with a minimal pipeline that you can customize to build and deploy your code.
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
@@ -33,3 +34,12 @@ steps:
     publishLocation: 'Container'
 
 #Your build pipeline references an undefined variable named ‘Parameters.appFiles’. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab. See https://go.microsoft.com/fwlink/?linkid=865972
+- task: AppCenterDistribute@3
+  inputs:
+    serverEndpoint: 'AppCenter'
+    appSlug: 'https://appcenter.ms/users/thomas.bernard-diiage.org/apps/IN-IT-Manage'
+    appFile: 'drop/s/InitManage/InitManage/bin/Release/net6.0-android/com.companyname.initmanage-Signed.aab'
+    symbolsOption: 'Android'
+    releaseNotesOption: 'input'
+    releaseNotesInput: 'New release'
+    destinationType: 'groups'
