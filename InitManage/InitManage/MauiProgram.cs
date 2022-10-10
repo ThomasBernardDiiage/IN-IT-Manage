@@ -70,6 +70,7 @@ public static class MauiProgram
 #endif
 
 		containerRegistry.RegisterSingleton<IPreferenceHelper, PreferenceHelper>();
+		containerRegistry.RegisterSingleton<IStackRequestHelper, StackRequestHelper>();
     }
 
 	private static void RegisterServices(this IContainerRegistry containerRegistry)
@@ -78,9 +79,9 @@ public static class MauiProgram
 
         containerRegistry.RegisterSingleton<IResourceService, ResourceService>();
         containerRegistry.RegisterSingleton<IUserService, UserService>();
-        containerRegistry.RegisterSingleton<IOptionService, MockedOptionService>();
-        containerRegistry.RegisterSingleton<ITypeService, TypeService>();
         containerRegistry.RegisterSingleton<IBookingService, BookingService>();
+        containerRegistry.RegisterSingleton<IOptionService, OptionService>();
+        containerRegistry.RegisterSingleton<ITypeService, TypeService>();
     }
 
     private static void RegisterNavigation(this IContainerRegistry containerRegistry)
