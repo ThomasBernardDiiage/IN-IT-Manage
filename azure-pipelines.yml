@@ -33,7 +33,13 @@ steps:
     ArtifactName: 'drop'
     publishLocation: 'Container'
 
-
+- task: CmdLine@2
+  inputs:
+    script: |
+      echo Write your commands here
+      
+      echo dir
+      dir
 
 #Your build pipeline references an undefined variable named ‘Parameters.appFiles’. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab. See https://go.microsoft.com/fwlink/?linkid=865972
 - task: AppCenterDistribute@3
