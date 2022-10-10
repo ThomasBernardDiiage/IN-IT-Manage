@@ -1,17 +1,21 @@
 ﻿using System;
+using System.Net;
 using InitManage.Helpers.Interfaces;
 using InitManage.Models.Entities;
 using Newtonsoft.Json;
+using Simple.Http;
 
 namespace InitManage.Helpers;
 
 public class StackRequestHelper : IStackRequestHelper
 {
-
+    private string _jsonFilePath = "stack.json";
     private bool _isStackIsRunning;
+    private readonly IHttpService _httpService;
 
-    public StackRequestHelper()
+    public StackRequestHelper(IHttpService httpService)
     {
+        _httpService = httpService;
     }
 
     public void AddItemToStack(StackItemEntity stackItem)
@@ -32,9 +36,43 @@ public class StackRequestHelper : IStackRequestHelper
     }
 
 
-    private void StartStack()
+    private async void StartStack()
     {
-        var stackText = GetFileContent();
+
+        // Get all item from json file
+        var stack = GetFileContent()
+            .OrderBy(stackItem => stackItem.Priority)
+            .OrderBy(stackItem => stackItem.Date)
+            .ToList();
+
+        while (_isStackIsRunning)
+        {
+            foreach (var stackItem in stack)
+            {
+                var response = await _httpService.SendRequestAsync(stackItem.Url, stackItem.HttpMethod, stackItem.Content);
+
+                if (response.HttpStatusCode == HttpStatusCode.OK)
+                {
+                    stack.Remove(stackItem);
+                }
+                else
+                {
+                    // If current retrty >= of maxnumberof retry
+                    stackItem.NumberOfRetry++;
+                    if (stackItem.CurrentRetry >= stackItem.NumberOfRetry)
+                    {
+                        Console.WriteLine("==== ERROR ====");
+                        Console.WriteLine($"Error when sending request : {stackItem.Url} {stackItem.HttpMethod} {stackItem.Content}");
+                        Console.WriteLine("==== ==== ==== ====");
+                        stack.Remove(stackItem);
+                    }
+                }
+
+
+            }
+        }
+
+
 
         _isStackIsRunning = false;
     }
@@ -43,15 +81,15 @@ public class StackRequestHelper : IStackRequestHelper
     {
         try
         {
-            var stackText = File.ReadAllText("stack.json");
+            var stackText = File.ReadAllText(_jsonFilePath);
             var stackItems = JsonConvert.DeserializeObject<IEnumerable<StackItemEntity>>(stackText);
             return stackItems;
         }
         catch(Exception ex)
         {
-
+            Console.WriteLine(ex);
+            return null;
         }
-
     }
 
 
