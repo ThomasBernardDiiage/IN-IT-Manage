@@ -30,7 +30,8 @@
         </sharpnado:TemplatedTaskLoader.ErrorControlTemplate>
         <sharpnado:TemplatedTaskLoader.ResultControlTemplate>
             <ControlTemplate>
-                <Grid RowDefinitions="200, *"
+                <ScrollView>
+                     <Grid RowDefinitions="200, *"
                       BindingContext="{Binding Source={RelativeSource AncestorType={x:Type ResourceViewModels:ResourceViewModel}}}">
                     <Image
                         Aspect="AspectFill"
@@ -121,6 +122,7 @@
                     </StackLayout>
                 </Grid>
 
+                </ScrollView>
             </ControlTemplate>
 
         </sharpnado:TemplatedTaskLoader.ResultControlTemplate>

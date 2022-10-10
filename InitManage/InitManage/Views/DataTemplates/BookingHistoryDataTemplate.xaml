@@ -14,16 +14,14 @@
                  Margin="5"
                  VerticalOptions="Center">
                  <Label.Text>
-                     <MultiBinding StringFormat="Réservation de {0} {1} de {2} à {3}">
-                         <Binding Path="User.Firstname"/>
-                         <Binding Path="User.Lastname"/>
+                     <MultiBinding StringFormat="Réservation de {0} de {1} à {2}">
+                         <Binding Path="Firstname"/>
                          <Binding Path="Start" StringFormat="{}{0:hh\hmm}"/>
                          <Binding Path="End" StringFormat="{}{0:hh\hmm}"/>
                      </MultiBinding>
                  </Label.Text>
              </Label>
             </StackLayout>
-             
         </Frame>
 </ContentView>
 
