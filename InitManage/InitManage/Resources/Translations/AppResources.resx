@@ -249,4 +249,7 @@
   <data name="Minutes" xml:space="preserve">
     <value>minute(s)</value>
   </data>
+  <data name="The" xml:space="preserve">
+    <value>le</value>
+  </data>
 </root>

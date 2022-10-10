@@ -308,5 +308,11 @@ namespace InitManage.Resources.Translations {
                 return ResourceManager.GetString("Minutes", resourceCulture);
             }
         }
+        
+        internal static string The {
+            get {
+                return ResourceManager.GetString("The", resourceCulture);
+            }
+        }
     }
 }
