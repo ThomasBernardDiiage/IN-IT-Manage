@@ -82,17 +82,20 @@
                                 Text="{Static Translations:AppResources.BookThe}"
                                 VerticalOptions="Center"/>
                             <DatePicker
+                                Date="{Binding BookingDate}"
                                 HorizontalOptions="FillAndExpand"/>
                         </StackLayout>
                         <StackLayout Orientation="Horizontal" Spacing="10">
                             <Label
                                 Text="{Static Translations:AppResources.At}"
                                 VerticalOptions="Center"/>
-                            <TimePicker/>
+                            <TimePicker
+                                Time="{Binding StartTime}"/>
                             <Label
                                 Text="à"
                                 VerticalOptions="Center"/>
-                            <TimePicker/>
+                            <TimePicker
+                                Time="{Binding EndTime}"/>
                         </StackLayout>
                         <StackLayout Orientation="Horizontal" Spacing="10">
                             <Label

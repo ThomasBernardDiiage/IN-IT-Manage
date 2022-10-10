@@ -29,7 +29,7 @@ namespace InitManage.Services
 
         public async Task<IEnumerable<BookingWrapper>> GetBookingsWrappersAsync()
         {
-            var response = await _httpService.SendRequestAsync<IEnumerable<DetailledBookingDTODown>>($"{Constants.ApiBaseAdress}{Constants.BookingEndPoint}/{Constants.UserEndPoint}/1", HttpMethod.Get);
+            var response = await _httpService.SendRequestAsync<IEnumerable<DetailledBookingDTODown>>($"{Constants.ApiBaseAdress}{Constants.BookingEndPoint}/{Constants.UserEndPoint}", HttpMethod.Get);
 
             if (response.HttpStatusCode == HttpStatusCode.OK)
             {
@@ -42,7 +42,7 @@ namespace InitManage.Services
         public async Task<bool> CreateBookingAsync(IBookingEntity booking)
         {
             var dto = new BookingDTOUp(booking);
-            var result = await _httpService.SendRequestAsync<BookingDTOUp>($"{Constants.ApiBaseAdress}{Constants.BookingEndPoint}", HttpMethod.Post, dto);
+            var result = await _httpService.SendRequestAsync($"{Constants.ApiBaseAdress}{Constants.BookingEndPoint}", HttpMethod.Post, dto);
             return result.HttpStatusCode == HttpStatusCode.OK;
         }
     }
