@@ -13,7 +13,7 @@ namespace InitManage.Models.DTOs
         [JsonProperty("options")]
         public IEnumerable<OptionDTO> Options { get; set;}
 
-        [JsonProperty("booking")]
+        [JsonProperty("bookings")]
         public IEnumerable<BookingDTO> Bookings { get; set; }
     }
 }

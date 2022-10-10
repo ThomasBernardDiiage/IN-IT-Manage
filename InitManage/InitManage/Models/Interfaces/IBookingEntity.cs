@@ -9,6 +9,6 @@ public interface IBookingEntity
     DateTime Start { get; set; }
     DateTime End { get; set; }
     int Capacity { get; set; }
-
+    string Firstname { get; set; }
 }
 

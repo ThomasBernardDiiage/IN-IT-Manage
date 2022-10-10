@@ -6,14 +6,16 @@ public class Constants
     public const string ResourceIdNavigationParameter = "resource";
 
     //public const string ApiBaseAdress = "https://6329dd90d2c97d8c52728c68.mockapi.io/api/";
-    public const string ApiBaseAdress = "http://10.4.0.84:3000/";
+    public const string ApiBaseAdress = "http://3.84.204.63:3000/";
     public const string ResourceEndPoint = "resource";
     public const string ResourcesEndPoint = "resources";
     public const string AuthEndPoint = "login";
     public const string OptionEndPoint = "options";
-    public const string TypeEndPoint = "types";
+    public const string TypeEndPoint = "types"; 
+    public const string BookingEndPoint = "booking";
+    public const string UserEndPoint = "user";
 
-	public const string IconFont = nameof(IconFont);
+    public const string IconFont = nameof(IconFont);
 
 	#region Page names
 
@@ -38,6 +40,7 @@ public class Constants
     public const string TagsImage = "tags";
     public const string CalendarImage = "calendar";
     public const string ToolboxImage = "toolbox";
+    public const string ClockImage = "clock";
 
 
     #endregion

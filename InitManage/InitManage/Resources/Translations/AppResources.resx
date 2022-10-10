@@ -240,4 +240,16 @@
   <data name="LoadingResource" xml:space="preserve">
     <value>Chargement de la resource</value>
   </data>
+  <data name="Reminder" xml:space="preserve">
+    <value>Rappel</value>
+  </data>
+  <data name="YourBookingStartIn" xml:space="preserve">
+    <value>Votre réservation commence dans</value>
+  </data>
+  <data name="Minutes" xml:space="preserve">
+    <value>minute(s)</value>
+  </data>
+  <data name="The" xml:space="preserve">
+    <value>le</value>
+  </data>
 </root>

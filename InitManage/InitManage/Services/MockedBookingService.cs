@@ -15,6 +15,11 @@ public class MockedBookingService : IBookingService
         _resourceService = resourceService;
     }
 
+    public Task<bool> CreateBookingAsync(IBookingEntity booking)
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task<IBookingEntity> GetBookingAsync(long id)
     {
         var booking = new BookingEntity()
@@ -22,7 +27,7 @@ public class MockedBookingService : IBookingService
             Id = 1,
             Capacity = 2,
             ResourceId = 1,
-            UserId = 1,
+            //UserId = 1,
             Start = DateTime.Now,
             End = DateTime.Now.AddMinutes(30)
         };
@@ -41,7 +46,7 @@ public class MockedBookingService : IBookingService
                 Id = i,
                 Capacity = new Random().Next(2, 28),
                 ResourceId = 1,
-                UserId = 1,
+                //UserId = 1,
                 Start = DateTime.Now.AddMinutes(15 * i),
                 End = DateTime.Now.AddMinutes(15 * i + 15)
             };
@@ -60,7 +65,7 @@ public class MockedBookingService : IBookingService
         foreach (var booking in bookings)
         {
             var bookingWrapper = new BookingWrapper(booking);
-            bookingWrapper.Resource = await _resourceService.GetResourceAsync(bookingWrapper.ResourceId);
+            bookingWrapper.Resource = await _resourceService.GetResourceWrapperAsync(bookingWrapper.ResourceId);
             bookingsWrappers.Add(bookingWrapper);
         }
 

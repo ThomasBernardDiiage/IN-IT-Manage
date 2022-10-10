@@ -9,5 +9,7 @@ public interface IBookingService
     Task<IEnumerable<IBookingEntity>> GetBookingsAsync();
     Task<IBookingEntity> GetBookingAsync(long id);
     Task<IEnumerable<BookingWrapper>> GetBookingsWrappersAsync();
+
+    Task<bool> CreateBookingAsync(IBookingEntity booking);
 }
 

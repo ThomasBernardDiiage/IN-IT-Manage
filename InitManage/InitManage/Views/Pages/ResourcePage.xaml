@@ -30,7 +30,8 @@
         </sharpnado:TemplatedTaskLoader.ErrorControlTemplate>
         <sharpnado:TemplatedTaskLoader.ResultControlTemplate>
             <ControlTemplate>
-                <Grid RowDefinitions="200, *"
+                <ScrollView>
+                     <Grid RowDefinitions="200, *"
                       BindingContext="{Binding Source={RelativeSource AncestorType={x:Type ResourceViewModels:ResourceViewModel}}}">
                     <Image
                         Aspect="AspectFill"
@@ -81,23 +82,27 @@
                                 Text="{Static Translations:AppResources.BookThe}"
                                 VerticalOptions="Center"/>
                             <DatePicker
+                                Date="{Binding BookingDate}"
                                 HorizontalOptions="FillAndExpand"/>
                         </StackLayout>
                         <StackLayout Orientation="Horizontal" Spacing="10">
                             <Label
                                 Text="{Static Translations:AppResources.At}"
                                 VerticalOptions="Center"/>
-                            <TimePicker/>
+                            <TimePicker
+                                Time="{Binding StartTime}"/>
                             <Label
                                 Text="à"
                                 VerticalOptions="Center"/>
-                            <TimePicker/>
+                            <TimePicker
+                                Time="{Binding EndTime}"/>
                         </StackLayout>
                         <StackLayout Orientation="Horizontal" Spacing="10">
                             <Label
                                 Text="{Static Translations:AppResources.For}"
                                 VerticalOptions="Center"/>
                             <Entry
+                                Text="{Binding Capacity}"
                                 Keyboard="Numeric"/>
 
                             <Label
@@ -120,6 +125,7 @@
                     </StackLayout>
                 </Grid>
 
+                </ScrollView>
             </ControlTemplate>
 
         </sharpnado:TemplatedTaskLoader.ResultControlTemplate>

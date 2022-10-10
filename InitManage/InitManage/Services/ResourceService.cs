@@ -18,7 +18,7 @@ public class ResourceService : IResourceService
         _httpService = httpService;
     }
 
-    public async Task<ResourceWrapper> GetResourceAsync(long id)
+    public async Task<ResourceWrapper> GetResourceWrapperAsync(long id)
     {
         var response = await _httpService.SendRequestAsync<DetailledResourceDTODown>($"{Constants.ApiBaseAdress}{Constants.ResourceEndPoint}/{id}", HttpMethod.Get);
         var wrapper = new ResourceWrapper(response?.Result);
@@ -27,20 +27,11 @@ public class ResourceService : IResourceService
         return wrapper;
     }
 
-    public Task<IEnumerable<IBookingEntity>> GetResourceBookingsAsync(long resourceId)
-    {
-        throw new NotImplementedException();
-    }
 
-    public Task<IEnumerable<BookingWrapper>> GetResourceBookingsWrappersAsync(long resourceId)
+    public async Task<IEnumerable<ResourceWrapper>> GetResourcesWrapperAsync()
     {
-        throw new NotImplementedException();
-    }
-
-    public async Task<IEnumerable<IResourceEntity>> GetResourcesAsync()
-    {
-        var response = await _httpService.SendRequestAsync<IEnumerable<ResourceDTODown>>($"{Constants.ApiBaseAdress}{Constants.ResourcesEndPoint}", HttpMethod.Get);
-        return response?.Result;
+        var response = await _httpService.SendRequestAsync<IEnumerable<DetailledResourceDTODown>>($"{Constants.ApiBaseAdress}{Constants.ResourcesEndPoint}", HttpMethod.Get);
+        return response?.Result?.Select(r => new ResourceWrapper(r));
     }
 
     public async Task<bool> CreateResource(IResourceEntity resource)

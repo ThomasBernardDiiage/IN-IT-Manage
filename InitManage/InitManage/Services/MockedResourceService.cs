@@ -13,7 +13,7 @@ public class MockedResourceService : IResourceService
 {
 
     #region GetResourceAsync
-    public async Task<ResourceWrapper> GetResourceAsync(long id)
+    public async Task<ResourceWrapper> GetResourceWrapperAsync(long id)
     {
         var resource = new ResourceWrapper
         {
@@ -56,7 +56,7 @@ public class MockedResourceService : IResourceService
     public async Task<IEnumerable<IBookingEntity>> GetResourceBookingsAsync(long resourceId)
     {
         var bookings = new List<BookingEntity>();
-        var resource = await GetResourceAsync(resourceId);
+        var resource = await GetResourceWrapperAsync(resourceId);
 
         var lastBooking = new DateTime(2022, 09, 13, 8, 0, 0);
 
@@ -67,7 +67,7 @@ public class MockedResourceService : IResourceService
                 Id = i,
                 Capacity = resource?.Capacity ?? 1,
                 ResourceId = resource?.Id ?? 0,
-                UserId = 1,
+                //UserId = 1,
                 Start = lastBooking.AddMinutes(15),
                 End = lastBooking.AddMinutes(new Random().Next(2, 4) * 15)
             };
@@ -97,6 +97,11 @@ public class MockedResourceService : IResourceService
     public async Task<bool> CreateResource(IResourceEntity resource)
     {
         return true;
+    }
+
+    public Task<IEnumerable<ResourceWrapper>> GetResourcesWrapperAsync()
+    {
+        throw new NotImplementedException();
     }
 }
 

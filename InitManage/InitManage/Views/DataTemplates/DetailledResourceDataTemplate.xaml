@@ -11,7 +11,7 @@
             Padding="5">
             <Grid
                 ColumnSpacing="10"
-                RowDefinitions="Auto, Auto, Auto, Auto"
+                RowDefinitions="Auto, Auto, Auto, Auto, Auto"
                 ColumnDefinitions="3*, 7*">
 
                 <Image
@@ -36,13 +36,19 @@
                     Text="{Binding Start, StringFormat='Le {0:dd/MM/yyyy}'}"/>
 
                 <Label
+                    Grid.Row="2"
+                    TextColor="{StaticResource Light}"
+                    Grid.Column="1"
+                    Text="{Binding Resource.Address}"/>
+
+                <Label
                     VerticalOptions="EndAndExpand"
                     VerticalTextAlignment="End"
                     TextColor="{StaticResource Light}"
                     Grid.Column="1"
-                    Grid.Row="2">
+                    Grid.Row="3">
                      <Label.Text>
-                         <MultiBinding StringFormat="De {0:hh:mm} à {1:hh:mm}">
+                         <MultiBinding StringFormat="De {0:hh:mm} à {1:hh:mm} le {0:dd/MM/yyyy}">
                              <Binding Path="Start"/>
                              <Binding Path="End"/>
                          </MultiBinding>

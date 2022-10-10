@@ -13,22 +13,12 @@ public interface IResourceService
     /// Get all existing resources
     /// </summary>
     /// <returns></returns>
-    Task<IEnumerable<IResourceEntity>> GetResourcesAsync();
+    Task<IEnumerable<ResourceWrapper>> GetResourcesWrapperAsync();
 
     /// <summary>
     /// Get a specific resource with his Id
     /// </summary>
     /// <param name="id">The id of the resource</param>
     /// <returns></returns>
-    Task<ResourceWrapper> GetResourceAsync(long id);
-
-    /// <summary>
-    /// Return all bookings of a resource
-    /// </summary>
-    /// <param name="resourceId">The id of the resource</param>
-    /// <returns></returns>
-    Task<IEnumerable<IBookingEntity>> GetResourceBookingsAsync(long resourceId);
-
-    Task<IEnumerable<BookingWrapper>> GetResourceBookingsWrappersAsync(long resourceId);
+    Task<ResourceWrapper> GetResourceWrapperAsync(long id);
 }
-

@@ -113,20 +113,18 @@
                         <DatePicker
                             Grid.Row="4"
                             Grid.Column="1"
-                            Date="{Binding StartDate}"
-                            MaximumDate="{Binding EndDate}"/>
+                            Date="{Binding SelectedDate}"/>
                             
                         <Image
                             Grid.Row="4"
                             Grid.Column="2"
                             Style="{StaticResource IconImage}"
-                            Source="{Static Commons:Constants.CalendarImage}"/>
+                            Source="{Static Commons:Constants.ClockImage}"/>
 
-                        <DatePicker
+                        <TimePicker
+                            Time="{Binding SelectedTime}"
                             Grid.Row="4"
-                            Grid.Column="3"
-                            Date="{Binding EndDate}"
-                            MinimumDate="{Binding StartDate}"/>
+                            Grid.Column="3"/>
 
                         <Image
                             Grid.Row="5"

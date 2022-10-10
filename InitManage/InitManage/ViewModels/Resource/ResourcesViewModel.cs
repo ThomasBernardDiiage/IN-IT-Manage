@@ -69,13 +69,18 @@ public class ResourcesViewModel : BaseViewModel
                 return new Func<OptionWrapper, bool>(option => true);
             });
 
-
+        var timeFilter = this.WhenAnyValue(vm => vm.SelectedDate, vm => vm.SelectedTime)
+            .Select(query =>
+            {
+                return new Func<ResourceWrapper, bool>(r => !(r.Bookings?.Any(booking => SelectedDate.Add(SelectedTime).IsBetween(booking.Start, booking.End)) ?? false));
+            });
 
         _resourcesCache
             .Connect()
             .Filter(searchFilter)
             .Filter(capacityFilter)
             .Filter(addressFilter)
+            .Filter(timeFilter)
             .Filter(typeResourceFilter)
             .Bind(out _resources)
             .ObserveOn(RxApp.MainThreadScheduler)
@@ -88,10 +93,9 @@ public class ResourcesViewModel : BaseViewModel
             .ObserveOn(RxApp.MainThreadScheduler)
             .Subscribe();
 
-
-        StartDate = DateTime.Now;
-        EndDate = DateTime.Now.AddDays(1);
         Loader = new TaskLoaderNotifier();
+        SelectedDate = DateTime.Now;
+        SelectedTime = TimeSpan.FromHours(DateTime.Now.Hour);
     }
 
     #region Life cycle
@@ -105,12 +109,12 @@ public class ResourcesViewModel : BaseViewModel
             Loader.Load(async _ =>
             {
                 LoadingMessage = AppResources.LoadingResources;
-                var resources = await _resourceService.GetResourcesAsync();
+                var resources = await _resourceService.GetResourcesWrapperAsync();
 
                 if (resources == null)
                     throw new Exception("Error when resources recuperation");
 
-                _resourcesCache.AddOrUpdate(resources.Select(r => new ResourceWrapper(r)));
+                _resourcesCache.AddOrUpdate(resources);
 
                 ResourcesCapacities = resources.Select(r => r.Capacity).OrderBy(x => x).Distinct().ToList();
 
@@ -217,24 +221,24 @@ public class ResourcesViewModel : BaseViewModel
 
     #endregion
 
-    #region StartDate
+    #region SelectedDate
 
-    private DateTime _startDate;
-    public DateTime StartDate
+    private DateTime _selectedDate;
+    public DateTime SelectedDate
     {
-        get => _startDate;
-        set => this.RaiseAndSetIfChanged(ref _startDate, value);
+        get => _selectedDate;
+        set => this.RaiseAndSetIfChanged(ref _selectedDate, value);
     }
 
     #endregion
 
-    #region EndDate
+    #region SelectedTime
 
-    private DateTime _endDate;
-    public DateTime EndDate
+    private TimeSpan _selectedTime;
+    public TimeSpan SelectedTime
     {
-        get => _endDate;
-        set => this.RaiseAndSetIfChanged(ref _endDate, value);
+        get => _selectedTime;
+        set => this.RaiseAndSetIfChanged(ref _selectedTime, value);
     }
 
     #endregion

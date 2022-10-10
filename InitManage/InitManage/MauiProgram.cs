@@ -81,7 +81,7 @@ public static class MauiProgram
         containerRegistry.RegisterSingleton<IUserService, UserService>();
         containerRegistry.RegisterSingleton<IOptionService, MockedOptionService>();
         containerRegistry.RegisterSingleton<ITypeService, TypeService>();
-        containerRegistry.RegisterSingleton<IBookingService, MockedBookingService>();
+        containerRegistry.RegisterSingleton<IBookingService, BookingService>();
     }
 
     private static void RegisterNavigation(this IContainerRegistry containerRegistry)
