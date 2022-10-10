@@ -24,6 +24,9 @@ namespace InitManage.Models.DTOs
 
         [JsonProperty("capacity")]
         public int Capacity { get; set; }
+
+        [JsonProperty("userName")]
+        public string Firstname { get; set; }
     }
 }
 

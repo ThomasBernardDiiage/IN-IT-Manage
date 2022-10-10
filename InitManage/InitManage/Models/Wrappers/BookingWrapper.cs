@@ -29,6 +29,7 @@ public class BookingWrapper : ReactiveObject, IBookingEntity
         ResourceId = detailledBookingDTODown.IdResource;
         Start = detailledBookingDTODown.Start;
         End = detailledBookingDTODown.End;
+        Firstname = detailledBookingDTODown.Firstname;
 
         var resource = new ResourceEntity
         {
@@ -48,6 +49,8 @@ public class BookingWrapper : ReactiveObject, IBookingEntity
     public DateTime Start { get; set; }
     public DateTime End { get; set; }
     public int Capacity { get; set; }
+    public string Firstname { get; set; }
+
 
     public IResourceEntity Resource { get; set; }
     public IUserEntity User { get; set; }
@@ -67,6 +70,7 @@ public class BookingWrapper : ReactiveObject, IBookingEntity
     #region OnBookingTappedCommand
 
     public Command BookingTappedCommand { get; private set; }
+
     private void OnBookingTappedCommand()
     {
         IsOverlayVisible = !IsOverlayVisible;

@@ -15,5 +15,6 @@ public class BookingEntity : IBookingEntity
     public DateTime Start { get; set; }
     public DateTime End { get; set; }
     public int Capacity { get; set; }
+    public string Firstname { get; set; }
 }
 
