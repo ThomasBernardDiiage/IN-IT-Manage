@@ -4,6 +4,7 @@ using InitManage.Helpers.Interfaces;
 using UserNotifications;
 using InitManage.Models.Wrappers;
 using NotificationEventArgs = InitManage.Models.Wrappers.NotificationEventArgs;
+using UIKit;
 
 namespace InitManage.Platforms.iOS.Helpers;
 
@@ -12,6 +13,7 @@ public class iOSNotificationHelper : INotificationHelper
     int messageId = 0;
     bool hasNotificationsPermission;
     public event EventHandler NotificationReceived;
+    private const string NotificationKey = "LocalNotificationKey";
 
     public void Initialize()
     {
@@ -83,6 +85,19 @@ public class iOSNotificationHelper : INotificationHelper
             Minute = dateTime.Minute,
             Second = dateTime.Second
         };
+    }
+
+    public void CancelPush(int id)
+    {
+        UIApplication.SharedApplication.CancelAllLocalNotifications();
+        var notifications = UIApplication.SharedApplication.ScheduledLocalNotifications;
+        var notification = notifications.Where(n => n.UserInfo.ContainsKey(NSObject.FromObject(NotificationKey))).FirstOrDefault(n => n.UserInfo[NotificationKey].Equals(NSObject.FromObject(id)));
+        UIApplication.SharedApplication.CancelAllLocalNotifications();
+        if (notification != null)
+        {
+            UIApplication.SharedApplication.CancelLocalNotification(notification);
+            UIApplication.SharedApplication.CancelAllLocalNotifications();
+        }
     }
 }
 

@@ -74,7 +74,6 @@ public static class MauiProgram
 
 	private static void RegisterServices(this IContainerRegistry containerRegistry)
     {
-        containerRegistry.RegisterSingleton<IAlertDialogService, CommunityToolKitAlertDialogService>();
         containerRegistry.RegisterSingleton<IHttpService, HttpService>();
 
         containerRegistry.RegisterSingleton<IResourceService, ResourceService>();
