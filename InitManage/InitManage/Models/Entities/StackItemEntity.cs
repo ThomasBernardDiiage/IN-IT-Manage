@@ -9,7 +9,7 @@ public class StackItemEntity
     public DateTime Date { get; set; }
     public string Url { get; set; }
     public string Content { get; set; }
-    public HttpMethod HttpMethod { get; set;s }
+    public HttpMethod HttpMethod { get; set; }
 
 
     public StackItemEntity(string url, string content, HttpMethod httpMethod, int priority = 1, int numberOfRetry = 5)

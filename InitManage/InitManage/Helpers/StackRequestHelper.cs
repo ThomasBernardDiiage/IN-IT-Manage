@@ -15,15 +15,23 @@ public class StackRequestHelper : IStackRequestHelper
 
     public StackRequestHelper(IHttpService httpService)
     {
+        if (!File.Exists(_jsonFilePath))
+            File.Create(_jsonFilePath);
         _httpService = httpService;
     }
 
     public void AddItemToStack(StackItemEntity stackItem)
     {
         // 1) Add Item to stack
-        var stackItems = GetFileContent();
-        stackItems.ToList().Add(stackItem);
+        var stackItems = GetFileContent()?.ToList();
 
+        // If stackItems is null or empty
+        if (stackItems == null)
+            stackItems = new List<StackItemEntity>();
+
+        stackItems.Add(stackItem);
+
+        WriteFileContent(JsonConvert.SerializeObject(stackItems));
 
         // 2) Start stack if not started
 
@@ -81,14 +89,29 @@ public class StackRequestHelper : IStackRequestHelper
     {
         try
         {
-            var stackText = File.ReadAllText(_jsonFilePath);
-            var stackItems = JsonConvert.DeserializeObject<IEnumerable<StackItemEntity>>(stackText);
+            var stream = FileSystem.OpenAppPackageFileAsync(_jsonFilePath).GetAwaiter().GetResult();
+            var reader = new StreamReader(stream);
+
+            var stackItems = JsonConvert.DeserializeObject<IEnumerable<StackItemEntity>>(reader.ReadToEnd());
             return stackItems;
+        }
+        catch (Exception ex)
+        {
+            return null;
+        }
+    }
+
+    private void WriteFileContent(string content)
+    {
+        try
+        {
+            var stream = FileSystem.OpenAppPackageFileAsync(_jsonFilePath).GetAwaiter().GetResult();
+            var sw = new StreamWriter(stream);
+            sw.Write(content);
         }
         catch(Exception ex)
         {
             Console.WriteLine(ex);
-            return null;
         }
     }
 

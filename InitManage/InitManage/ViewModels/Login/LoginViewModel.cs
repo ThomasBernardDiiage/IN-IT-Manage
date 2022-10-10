@@ -6,6 +6,7 @@ using Plugin.Firebase.CloudMessaging;
 using ReactiveUI;
 using Sharpnado.TaskLoaderView;
 using InitManage.Commons;
+using InitManage.Models.Entities;
 
 namespace InitManage.ViewModels.Login;
 
@@ -38,7 +39,7 @@ public class LoginViewModel : BaseViewModel
     {
         await base.OnNavigatedToAsync(parameters);
 
-        _stackRequestHelper.AddItemToStack(new Models.Entities.StackItemEntity($"{Constants.ApiBaseAdress}{Constants.TypeEndPoint}", ""));
+        _stackRequestHelper.AddItemToStack(new StackItemEntity($"{Constants.ApiBaseAdress}{Constants.TypeEndPoint}", "", HttpMethod.Get));
 
 		try // Work only on Android (Must be tested on iOS real device)
 		{
