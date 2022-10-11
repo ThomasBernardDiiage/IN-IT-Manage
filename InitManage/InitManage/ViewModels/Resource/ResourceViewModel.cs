@@ -154,25 +154,31 @@ public class ResourceViewModel : BaseViewModel
     public ReactiveCommand<Unit, Unit> BookCommand { get; private set; }
     private async Task OnBookCommand()
     {
-        var booking = new BookingEntity()
-        { 
-            ResourceId = Resource.Id,
-            Capacity = Capacity,
-            Start = BookingDate.Add(StartTime),
-            End = BookingDate.Add(EndTime)
-        };
-
-        
-
-        if (await _bookingService.CreateBookingAsync(booking))
+        try
         {
-            if (_preferenceHelper.IsNotificationEnabled)
-                _notificationHelper.SendNotification
-                    (AppResources.Reminder, $"{AppResources.YourBookingStartIn} {_preferenceHelper.TimeBeforeReceiveNotification.Minutes} {AppResources.Minutes}", BookingDate.Add(StartTime).AddMinutes(-_preferenceHelper.TimeBeforeReceiveNotification.Minutes));
+            var booking = new BookingEntity()
+            {
+                ResourceId = Resource.Id,
+                Capacity = Capacity,
+                Start = BookingDate.Add(StartTime),
+                End = BookingDate.Add(EndTime)
+            };
 
 
-            await NavigationService.GoBackAsync();
-    
+            if (await _bookingService.CreateBookingAsync(booking))
+            {
+                if (_preferenceHelper.IsNotificationEnabled)
+                    _notificationHelper.SendNotification
+                        (AppResources.Reminder, $"{AppResources.YourBookingStartIn} {_preferenceHelper.TimeBeforeReceiveNotification.Minutes} {AppResources.Minutes}", BookingDate.Add(StartTime).AddMinutes(-_preferenceHelper.TimeBeforeReceiveNotification.Minutes));
+
+
+                await NavigationService.GoBackAsync();
+
+            }
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex);  
         }
     }
 
