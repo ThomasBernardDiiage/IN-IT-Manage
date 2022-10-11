@@ -49,7 +49,7 @@ public class ResourcesViewModel : BaseViewModel
             .Select(query =>
             {
                 if (!string.IsNullOrEmpty(query))
-                    return new Func<ResourceWrapper, bool>(resource => resource.Address?.Contains(Address) ?? false);
+                    return new Func<ResourceWrapper, bool>(resource => resource.Address?.ToLower()?.Contains(Address?.ToLower()) ?? false);
                 return new Func<ResourceWrapper, bool>(resource => true);
             });
 

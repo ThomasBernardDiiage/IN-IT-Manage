@@ -47,7 +47,7 @@
                         <Label
                             Grid.Column="1"
                             TextColor="{StaticResource Light}"
-                            Text="{Binding Capacity, StringFormat='{0} peoples'}">
+                            Text="{Binding Capacity, StringFormat='{0} personnes'}">
                         </Label>
                 </Grid>
             </Grid>
