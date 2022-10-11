@@ -49,5 +49,5 @@ steps:
     appFile: 'InitManage/InitManage/bin/Release/net6.0-android/com.companyname.initmanage-Signed.aab'
     symbolsOption: 'Android'
     releaseNotesOption: 'input'
-    releaseNotesInput: 'New release'
+    releaseNotesInput: 'Release $(Build.BuildNumber)'
     destinationType: 'groups'
