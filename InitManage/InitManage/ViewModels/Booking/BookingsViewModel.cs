@@ -26,6 +26,7 @@ public class BookingsViewModel : BaseViewModel
         _bookingsCache
             .Connect()
             .Bind(out _bookings)
+            .SortBy(b => b.Start)
             .ObserveOn(RxApp.MainThreadScheduler)
             .Subscribe();
     }
@@ -55,8 +56,6 @@ public class BookingsViewModel : BaseViewModel
     private readonly ReadOnlyObservableCollection<BookingWrapper> _bookings;
     public ReadOnlyObservableCollection<BookingWrapper> Bookings => _bookings;
     #endregion
-
-
 
     #endregion
 
