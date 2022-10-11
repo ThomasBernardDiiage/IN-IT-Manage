@@ -48,7 +48,7 @@
                     Grid.Column="1"
                     Grid.Row="3">
                      <Label.Text>
-                         <MultiBinding StringFormat="De {0:hh:mm} à {1:hh:mm} le {0:dd/MM/yyyy}">
+                         <MultiBinding StringFormat="De {0:HH:mm} à {1:HH:mm} le {0:dd/MM/yyyy}">
                              <Binding Path="Start"/>
                              <Binding Path="End"/>
                          </MultiBinding>

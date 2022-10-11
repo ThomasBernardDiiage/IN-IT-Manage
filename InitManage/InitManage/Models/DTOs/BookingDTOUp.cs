@@ -29,8 +29,8 @@ namespace InitManage.Models.DTOs
         public BookingDTOUp(IBookingEntity booking)
         {
             ResourceId = booking.ResourceId;
-            Start = booking.Start.ToString("yyyy-MM-dd hh:mm:ss");
-            End = booking.End.ToString("yyyy-MM-dd hh:mm:ss");
+            Start = booking.Start.ToString("yyyy-MM-dd HH:mm:ss");
+            End = booking.End.ToString("yyyy-MM-dd HH:mm:ss");
             Capacity = booking.Capacity;
         }
     }
