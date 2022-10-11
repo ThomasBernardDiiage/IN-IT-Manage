@@ -35,15 +35,13 @@ public class BookingsViewModel : BaseViewModel
 
     protected override async Task OnAppearingAsync()
     {
-        if (!_bookingsCache.Items.Any())
+
+        Loader.Load(async _ =>
         {
-            Loader.Load(async _ =>
-            {
-                LoadingMessage = AppResources.LoadingResources;
-                var bookingsWrapper = await _bookingService.GetBookingsWrappersAsync();
-                _bookingsCache.AddOrUpdate(bookingsWrapper);
-            });
-        }
+            LoadingMessage = AppResources.LoadingResources;
+            var bookingsWrapper = await _bookingService.GetBookingsWrappersAsync();
+            _bookingsCache.AddOrUpdate(bookingsWrapper);
+        });
     }
 
     #endregion
