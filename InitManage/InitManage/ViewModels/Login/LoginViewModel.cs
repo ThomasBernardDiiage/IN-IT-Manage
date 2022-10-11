@@ -38,7 +38,7 @@ public class LoginViewModel : BaseViewModel
     {
         await base.OnNavigatedToAsync(parameters);
 
-        _stackRequestHelper.AddItemToStack(new Models.Entities.StackItemEntity($"{Constants.ApiBaseAdress}{Constants.TypeEndPoint}", ""));
+        //_stackRequestHelper.AddItemToStack(new Models.Entities.StackItemEntity($"{Constants.ApiBaseAdress}{Constants.TypeEndPoint}", ""));
 
 		try // Work only on Android (Must be tested on iOS real device)
 		{
