@@ -9,13 +9,16 @@ namespace InitManage.Helpers;
 
 public class StackRequestHelper : IStackRequestHelper
 {
-    private string _jsonFilePath = "stack.json";
+    private string _jsonFilePath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "stack.json");
     private bool _isStackIsRunning;
     private readonly IHttpService _httpService;
 
     public StackRequestHelper(IHttpService httpService)
     {
         _httpService = httpService;
+
+        if (!File.Exists(_jsonFilePath))
+            File.Create(_jsonFilePath);
     }
 
     public void AddItemToStack(StackItemEntity stackItem)
@@ -67,8 +70,6 @@ public class StackRequestHelper : IStackRequestHelper
                         stack.Remove(stackItem);
                     }
                 }
-
-
             }
         }
 
