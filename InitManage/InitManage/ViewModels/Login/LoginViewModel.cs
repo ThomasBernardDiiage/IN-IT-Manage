@@ -14,17 +14,20 @@ public class LoginViewModel : BaseViewModel
     private readonly INotificationHelper _notificationHelper;
     private readonly IPreferenceHelper _preferenceHelper;
     private readonly IUserService _userService;
+    private readonly IStackRequestHelper _stackRequestHelper;
 
     public LoginViewModel(
         INavigationService navigationService,
         INotificationHelper notificationHelper,
         IPreferenceHelper preferenceHelper,
-        IUserService userService)
+        IUserService userService,
+        IStackRequestHelper stackRequestHelper)
         : base(navigationService)
     {
         _notificationHelper = notificationHelper;
         _preferenceHelper = preferenceHelper;
         _userService = userService;
+        _stackRequestHelper = stackRequestHelper;
 
         LoginCommand = new TaskLoaderCommand(OnLoginCommand);
     }
@@ -34,6 +37,8 @@ public class LoginViewModel : BaseViewModel
     protected override async Task OnNavigatedToAsync(INavigationParameters parameters)
     {
         await base.OnNavigatedToAsync(parameters);
+
+        _stackRequestHelper.AddItemToStack(new Models.Entities.StackItemEntity($"{Constants.ApiBaseAdress}{Constants.TypeEndPoint}", "", HttpMethod.Get));
 
 		try // Work only on Android (Must be tested on iOS real device)
 		{

@@ -11,6 +11,11 @@ public class MacNotificationHelper : INotificationHelper
 
     public event EventHandler NotificationReceived;
 
+    public void CancelPush(int id)
+    {
+        throw new NotImplementedException();
+    }
+
     public void Initialize()
     {
         throw new NotImplementedException();

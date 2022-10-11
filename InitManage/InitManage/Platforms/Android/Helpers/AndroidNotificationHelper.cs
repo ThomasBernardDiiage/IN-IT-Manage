@@ -117,6 +117,18 @@ public class AndroidNotificationHelper : INotificationHelper
         long utcAlarmTime = utcTime.AddSeconds(-epochDiff).Ticks / 10000;
         return utcAlarmTime; // milliseconds
     }
+
+    public void CancelPush(int id)
+    {
+        var notificationManager = NotificationManagerCompat.From(AndroidApp.Context);
+        notificationManager.CancelAll();
+        CreateIntent(id);
+    }
+
+    private Intent CreateIntent(int id)
+    {
+        return new Intent(AndroidApp.Context, typeof(AndroidNotificationHelper)).SetAction("LocalNotifierIntent" + id);
+    }
 }
 
 
