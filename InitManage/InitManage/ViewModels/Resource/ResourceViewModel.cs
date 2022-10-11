@@ -36,7 +36,20 @@ public class ResourceViewModel : BaseViewModel
         _notificationHelper = notificationHelper;
         _preferenceHelper = preferenceHelper;
 
-        BookCommand = ReactiveCommand.CreateFromTask(OnBookCommand);
+        var canExecuteBook = this.WhenAnyValue(vm => vm.BookingDate, vm => vm.StartTime, vm => vm.EndTime, vm => vm.Capacity)
+               .Select(query =>
+               {
+                   var isTimeOk = StartTime < EndTime;
+                   var isDateOk = BookingDate.Add(StartTime) >= DateTime.Now;
+                   var capacityOk = Capacity > 0 && Capacity <= Resource.Capacity;
+                   var isBookingFreeStart = !(Resource?.Bookings?.Any(b => BookingDate.Add(StartTime).IsBetween(b.Start, b.End)) ?? false);
+                   var isBookingFreeEnd = !(Resource?.Bookings?.Any(b => BookingDate.Add(EndTime).IsBetween(b.Start, b.End)) ?? false);
+                   //.Bookings?.Any(booking => SelectedDate.Add(SelectedTime).IsBetween(booking.Start, booking.End)) ?? false)
+                   return isTimeOk && isDateOk && capacityOk && isBookingFreeStart && isBookingFreeEnd;
+               })
+               .ObserveOn(RxApp.MainThreadScheduler);
+
+        BookCommand = ReactiveCommand.CreateFromTask(OnBookCommand, canExecuteBook);
 
         _bookingsCache
             .Connect()
