@@ -37,8 +37,7 @@ public class LoginViewModel : BaseViewModel
     protected override async Task OnNavigatedToAsync(INavigationParameters parameters)
     {
         await base.OnNavigatedToAsync(parameters);
-
-        _stackRequestHelper.AddItemToStack(new Models.Entities.StackItemEntity($"{Constants.ApiBaseAdress}{Constants.TypeEndPoint}", "", HttpMethod.Get));
+        //_stackRequestHelper.AddItemToStack(new Models.Entities.StackItemEntity($"{Constants.ApiBaseAdress}{Constants.TypeEndPoint}", ""));
 
 		try // Work only on Android (Must be tested on iOS real device)
 		{
