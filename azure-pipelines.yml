@@ -13,7 +13,7 @@ pool:
 steps:
 - task: CmdLine@2
   inputs:
-    script: 'dotnet workload install maui'
+    script: 'dotnet workload install maui 6.09'
 
 - task: DotNetCoreCLI@2
   inputs:
