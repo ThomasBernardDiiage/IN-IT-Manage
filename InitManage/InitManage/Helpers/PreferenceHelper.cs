@@ -66,5 +66,11 @@ public class PreferenceHelper : IPreferenceHelper
         get => Preferences.Get(nameof(Lastname), string.Empty);
         set => Preferences.Set(nameof(Lastname), value);
     }
+
+    public string ApiBaseAddress
+    {
+        get => Preferences.Get(nameof(ApiBaseAddress), string.Empty);
+        set => Preferences.Set(nameof(ApiBaseAddress), value);
+    }
 }
 

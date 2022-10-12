@@ -35,7 +35,7 @@ public class UserService : IUserService
             Password = password
         };
 
-        var response = await _httpService.SendRequestAsync<AuthDTODown>($"{Constants.ApiBaseAdress}{Constants.AuthEndPoint}", HttpMethod.Post, dto);
+        var response = await _httpService.SendRequestAsync<AuthDTODown>($"{_preferenceHelper.ApiBaseAddress}{Constants.AuthEndPoint}", HttpMethod.Post, dto);
 
         if (response?.Result != null)
         {
