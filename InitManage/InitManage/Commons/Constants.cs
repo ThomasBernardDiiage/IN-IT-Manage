@@ -6,7 +6,7 @@ public class Constants
     public const string ResourceIdNavigationParameter = "resource";
 
     //public const string ApiBaseAdress = "https://6329dd90d2c97d8c52728c68.mockapi.io/api/";
-    public const string ApiBaseAdress = "http://34.226.136.241:3000/";
+    public const string ApiBaseAdress = "http://ec2-35-171-17-110.compute-1.amazonaws.com:3000/";
     public const string ResourceEndPoint = "resource";
     public const string ResourcesEndPoint = "resources";
     public const string AuthEndPoint = "login";
