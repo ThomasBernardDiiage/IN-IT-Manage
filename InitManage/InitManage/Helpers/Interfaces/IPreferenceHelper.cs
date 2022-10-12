@@ -8,6 +8,7 @@ public interface IPreferenceHelper
     string Token { get; set; }
     string Firstname { get; set; }
     string Lastname { get; set; }
+    string ApiBaseAddress { get; set; }
 
 
 
