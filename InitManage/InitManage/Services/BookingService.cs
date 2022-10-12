@@ -1,4 +1,5 @@
 ﻿using InitManage.Commons;
+using InitManage.Helpers.Interfaces;
 using InitManage.Models.DTOs;
 using InitManage.Models.Interfaces;
 using InitManage.Models.Wrappers;
@@ -11,10 +12,12 @@ namespace InitManage.Services;
 public class BookingService: IBookingService
 {
     private readonly IHttpService _httpService;
+    private readonly IPreferenceHelper _preferenceHelper;
 
-    public BookingService(IHttpService httpService)
+    public BookingService(IHttpService httpService, IPreferenceHelper preferenceHelper)
     {
         _httpService = httpService;
+        _preferenceHelper = preferenceHelper;
     }
 
     public Task<IBookingEntity> GetBookingAsync(long id)
@@ -29,7 +32,7 @@ public class BookingService: IBookingService
 
     public async Task<IEnumerable<BookingWrapper>> GetBookingsWrappersAsync()
     {
-        var response = await _httpService.SendRequestAsync<IEnumerable<DetailledBookingDTODown>>($"{Constants.ApiBaseAdress}{Constants.BookingEndPoint}/{Constants.UserEndPoint}", HttpMethod.Get);
+        var response = await _httpService.SendRequestAsync<IEnumerable<DetailledBookingDTODown>>($"{_preferenceHelper.ApiBaseAddress}{Constants.BookingEndPoint}/{Constants.UserEndPoint}", HttpMethod.Get);
 
         if (response.HttpStatusCode == HttpStatusCode.OK)
         {
@@ -42,7 +45,7 @@ public class BookingService: IBookingService
     public async Task<bool> CreateBookingAsync(IBookingEntity booking)
     {
         var dto = new BookingDTOUp(booking);
-        var result = await _httpService.SendRequestAsync($"{Constants.ApiBaseAdress}{Constants.BookingEndPoint}", HttpMethod.Post, dto);
+        var result = await _httpService.SendRequestAsync($"{_preferenceHelper.ApiBaseAddress}{Constants.BookingEndPoint}", HttpMethod.Post, dto);
         return result.HttpStatusCode == HttpStatusCode.OK;
     }
 }

@@ -6,6 +6,7 @@ using Plugin.Firebase.CloudMessaging;
 using ReactiveUI;
 using Sharpnado.TaskLoaderView;
 using InitManage.Commons;
+using System.Reactive;
 
 namespace InitManage.ViewModels.Login;
 
@@ -30,6 +31,8 @@ public class LoginViewModel : BaseViewModel
         _stackRequestHelper = stackRequestHelper;
 
         LoginCommand = new TaskLoaderCommand(OnLoginCommand);
+        ImageTappedCommand = ReactiveCommand.CreateFromTask(OnImageTappedCommand);
+        ApiBaseAddress = _preferenceHelper.ApiBaseAddress;
     }
 
     #region Life cycle
@@ -83,6 +86,28 @@ public class LoginViewModel : BaseViewModel
     }
     #endregion
 
+    #region IsApiFormVisible
+
+    private bool _isApiFormVisible;
+    public bool IsApiFormVisible
+    {
+        get => _isApiFormVisible;
+        set => this.RaiseAndSetIfChanged(ref _isApiFormVisible, value);
+    }
+
+    #endregion
+
+    #region ApiBaseAddress
+
+    private string _apiBaseAddress;
+    public string ApiBaseAddress
+    {
+        get => _apiBaseAddress;
+        set => this.RaiseAndSetIfChanged(ref _apiBaseAddress, value);
+    }
+
+    #endregion
+
     #endregion
 
     #region Methods & Commands
@@ -93,6 +118,7 @@ public class LoginViewModel : BaseViewModel
     private async Task OnLoginCommand()
     {
 		LoadingMessage = AppResources.LoginInProgress;
+        _preferenceHelper.ApiBaseAddress = ApiBaseAddress;
         var isLoginSuccess = await _userService.LoginAsync(Mail, Password);
 
         if (isLoginSuccess)
@@ -109,6 +135,17 @@ public class LoginViewModel : BaseViewModel
 		}
 	}
     #endregion
+
+    #region OnImageTappedCommand
+
+    public ReactiveCommand<Unit, Unit> ImageTappedCommand { get; private set; }
+    private async Task OnImageTappedCommand()
+    {
+        IsApiFormVisible = !IsApiFormVisible;
+    }
+
+    #endregion
+
 
     #endregion
 }

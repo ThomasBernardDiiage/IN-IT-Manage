@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:LoginViewModels="clr-namespace:InitManage.ViewModels.Login"
@@ -15,7 +15,11 @@
         RowDefinitions="1*, 7*">
         <Ellipse
             HeightRequest="300"
-            WidthRequest="800"/>
+            WidthRequest="800">
+            <Ellipse.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding ImageTappedCommand}"/>
+            </Ellipse.GestureRecognizers>
+        </Ellipse>
 
         <skia:SKLottieView
             Grid.Row="1"
@@ -32,6 +36,12 @@
             <VerticalStackLayout
                 IsVisible="{Binding LoginCommand.Notifier.ShowLoader, Converter={StaticResource BoolToRevertBoolValueConverter}}"
                 Spacing="20">
+
+                <Entry
+                    IsVisible="{Binding IsApiFormVisible}"
+                    FontSize="20"
+                    Placeholder="Api adresse"
+                    Text="{Binding ApiBaseAddress}"/>
                 <Entry
                     FontSize="20"
                     Keyboard="Email"
